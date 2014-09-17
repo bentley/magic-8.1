@@ -30,6 +30,7 @@ static char rcsid[] __attribute__ ((unused)) = "$Header: /usr/cvsroot/magic-8.0/
 #include <sys/times.h>
 #include <sys/time.h>
 
+#include "tcltk/tclmagic.h"
 #include "utils/main.h"
 #include "utils/magic.h"
 #include "utils/malloc.h"
@@ -499,6 +500,7 @@ mainInitAfterArgs()
 
     if ((TechDefault == NULL) && (MainFileName != NULL))
 	(void) StrDup(&TechDefault, DBGetTech(MainFileName));
+
     if (TechDefault == NULL)
 	TechDefault = "scmos";
 
@@ -527,8 +529,14 @@ mainInitAfterArgs()
 
     StrDup(&SysLibPath, MAGIC_SYS_PATH);
 
-    CellLibPath = (char *)mallocMagic(strlen(MAGIC_LIB_PATH) + strlen(TechDefault) - 1);
-    (void) sprintf(CellLibPath, MAGIC_LIB_PATH, TechDefault);
+    if (TechDefault != NULL)
+    {
+	CellLibPath = (char *)mallocMagic(strlen(MAGIC_LIB_PATH)
+		+ strlen(TechDefault) - 1);
+	sprintf(CellLibPath, MAGIC_LIB_PATH, TechDefault);
+    }
+    else
+	CellLibPath = StrDup((char **)NULL, MAGIC_LIB_PATH);
     
     if (MainGraphicsFile == NULL) MainGraphicsFile = "/dev/null";
     if (MainMouseFile == NULL) MainMouseFile = MainGraphicsFile;
@@ -735,10 +743,36 @@ int
 mainInitFinal()
 {
     char *home;
-    char startupFileName[100];
+    char startupFileName[256];
     FILE *f;
 
     /* Read in system startup file, if it exists. */
+
+#ifdef MAGIC_WRAPPER
+
+    char *rname;
+    int result;
+
+    /* Use PaOpen first to perform variable substitutions, and	*/
+    /* return the actual filename in startupFileName.		*/
+
+    f = PaOpen(MAGIC_SYS_DOT, "r", (char *) NULL, ".",
+	    (char *) NULL, (char **) &rname);
+    if (f != NULL)
+    {
+	fclose(f);
+	result = Tcl_EvalFile(magicinterp, rname);
+	if (result != TCL_OK)
+	{
+	    TxError("%s\n", Tcl_GetStringResult(magicinterp));
+	    TxError("System startup file \"%s\" not found or unreadable!\n",
+			rname);
+	    Tcl_ResetResult(magicinterp);
+	}
+    }
+
+#else /* !MAGIC_WRAPPER */
+
     f = PaOpen(MAGIC_SYS_DOT, "r", (char *) NULL, ".",
 	    (char *) NULL, (char **) NULL);
     if (f != NULL)
@@ -746,6 +780,8 @@ mainInitFinal()
 	TxDispatch(f); 
 	(void) fclose(f);
     }
+
+#endif  /* !MAGIC_WRAPPER */
 
     /*
      * Strive for a wee bit more parallelism; let the graphics
@@ -763,9 +799,57 @@ mainInitFinal()
 	/* a full path, then look for this file in the home directory too. */
 
 	home = getenv("HOME");
+
+#ifdef MAGIC_WRAPPER
+
 	if (home != NULL && (RCFileName[0] != '/'))
 	{
 	    (void) sprintf(startupFileName, "%s/%s", home, RCFileName);
+
+	    result = Tcl_EvalFile(magicinterp, startupFileName);
+	    if (result != TCL_OK)
+	    {
+		Tcl_ResetResult(magicinterp);
+		/* Try the (deprecated) name ".magic" */
+		(void) sprintf(startupFileName, "%s/.magic", home);
+		result = Tcl_EvalFile(magicinterp, startupFileName);
+		if (result == TCL_OK)
+		    TxPrintf("Note:  Use of the file name \"~/.magic\" is deprecated."
+			"  Please change this to \"~/.magicrc\".\n");
+		else
+		    Tcl_ResetResult(magicinterp);	// Not an error
+	    }
+	}
+
+	result = Tcl_EvalFile(magicinterp, RCFileName);
+	if (result != TCL_OK)
+	{
+	    Tcl_ResetResult(magicinterp);
+	    /* Try the (deprecated) name ".magic" */
+	    result = Tcl_EvalFile(magicinterp, ".magic");
+	    if (result == TCL_OK)
+		TxPrintf("Note:  Use of the file name \".magic\" is deprecated."
+			"  Please change this to \".magicrc\".\n");
+	    else
+	    {
+		Tcl_ResetResult(magicinterp);
+		result = Tcl_EvalFile(magicinterp, "magic_setup");
+		if (result != TCL_OK)
+		{
+		    TxPrintf("No local startup file \"%s\", continuing without.\n",
+				RCFileName);
+		    Tcl_ResetResult(magicinterp);	// Still not an error
+		}
+	    }
+	}
+
+#else /* !MAGIC_WRAPPER */
+
+	if (home != NULL && (RCFileName[0] != '/'))
+	{
+	    (void) sprintf(startupFileName, "%s/%s", home, RCFileName);
+
+
 	    f = PaOpen(startupFileName, "r", (char *) NULL, ".",
 		(char *) NULL, (char **) NULL);
 
@@ -817,6 +901,9 @@ mainInitFinal()
 	    TxDispatch(f); 
 	    fclose(f);
 	}
+
+#endif /* !MAGIC_WRAPPER */
+
     }
 
     /*
