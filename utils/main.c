@@ -502,7 +502,7 @@ mainInitAfterArgs()
 	(void) StrDup(&TechDefault, DBGetTech(MainFileName));
 
     if (TechDefault == NULL)
-	TechDefault = "scmos";
+	TechDefault = "minimum";
 
     DBTypeInit();
     MacroInit();
@@ -645,9 +645,9 @@ mainInitAfterArgs()
 	/* technology, and only complain if that doesn't work	*/
 	/* either.						*/
 
-	if (!TechLoad("scmos", 0))
+	if (!TechLoad("minimum", 0))
 	{
-	    TxError("Cannot load technology \"scmos\" or \"%s\"\n", TechDefault);
+	    TxError("Cannot load technology \"minimum\" or \"%s\"\n", TechDefault);
 	    return 2;
 	}
     }
