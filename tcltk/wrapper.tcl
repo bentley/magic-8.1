@@ -554,29 +554,26 @@ proc magic::cursorview {win} {
       return
    }
    set framename [winfo parent $win]
-   set lambda [${win} tech lambda]
-   if {[llength $lambda] != 2} {return}
-   set lr [expr {(0.0 + [lindex $lambda 0]) / [lindex $lambda 1]}]
-   set olst [${win} cursor microns]
-   set olstx [lindex $olst 0]
-   set olsty [lindex $olst 1]
+   set cr [cif scale out]
+   if {$cr == 0} {return}
+   set olst [${win} cursor internal]
+   set olstx [expr [lindex $olst 0] * $cr]
+   set olsty [expr [lindex $olst 1] * $cr]
 
    if {$Opts(crosshair)} {
-      *bypass crosshair ${olstx}l ${olsty}l
+      *bypass crosshair ${olstx}i ${olsty}i
    }
 
    if {[${win} box exists]} {
       set dlst [${win} box position]
-      set dx [expr {$olstx - ([lindex $dlst 0]) * $lr }]
-      set dy [expr {$olsty - ([lindex $dlst 1]) * $lr }]
+      set dx [expr {$olstx - ([lindex $dlst 0]) * $cr }]
+      set dy [expr {$olsty - ([lindex $dlst 1]) * $cr }]
       if {[expr {$dx == int($dx)}]} {set dx [expr {int($dx)}]}
       if {[expr {$dy == int($dy)}]} {set dy [expr {int($dy)}]}
-      if {$dx >= 0} {set dx "+$dx"}
-      if {$dy >= 0} {set dy "+$dy"}
-      set titletext [format "(%g %g) %g %g microns" $olstx $olsty $dx $dy]
+      set titletext [format "(%+g %+g) %+g %+g microns" $olstx $olsty $dx $dy]
       ${framename}.titlebar.pos configure -text $titletext
    } else {
-      set titletext [format "(%g %g) lambda" $olstx $olsty]
+      set titletext [format "(%+g %+g) microns" $olstx $olsty]
       ${framename}.titlebar.pos configure -text $titletext
    }
 }

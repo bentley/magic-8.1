@@ -213,8 +213,7 @@ mainDoArgs(argc, argv)
 
     RCFileName = StrDup((char **) NULL, ".magicrc");
 
-    argc--;
-    while (argc-- > 0)
+    while (--argc > 0)
     {
 	argv++;
 	if (**argv == '-')
@@ -742,7 +741,7 @@ mainInitAfterArgs()
 int
 mainInitFinal()
 {
-    char *home;
+    char *home, cwd[512];
     char startupFileName[256];
     FILE *f;
 
@@ -821,24 +820,30 @@ mainInitFinal()
 	    }
 	}
 
-	result = Tcl_EvalFile(magicinterp, RCFileName);
-	if (result != TCL_OK)
+        if (getcwd(cwd, 512) == NULL || strcmp(cwd, home))
 	{
-	    Tcl_ResetResult(magicinterp);
-	    /* Try the (deprecated) name ".magic" */
-	    result = Tcl_EvalFile(magicinterp, ".magic");
-	    if (result == TCL_OK)
-		TxPrintf("Note:  Use of the file name \".magic\" is deprecated."
-			"  Please change this to \".magicrc\".\n");
-	    else
+	    /* Read in the .magicrc file from the current directory, if	*/
+	    /* different from HOME.					*/
+
+	    result = Tcl_EvalFile(magicinterp, RCFileName);
+	    if (result != TCL_OK)
 	    {
 		Tcl_ResetResult(magicinterp);
-		result = Tcl_EvalFile(magicinterp, "magic_setup");
-		if (result != TCL_OK)
+		/* Try the (deprecated) name ".magic" */
+		result = Tcl_EvalFile(magicinterp, ".magic");
+		if (result == TCL_OK)
+		    TxPrintf("Note:  Use of the file name \".magic\" is deprecated."
+				"  Please change this to \".magicrc\".\n");
+		else
 		{
-		    TxPrintf("No local startup file \"%s\", continuing without.\n",
-				RCFileName);
-		    Tcl_ResetResult(magicinterp);	// Still not an error
+		    Tcl_ResetResult(magicinterp);
+		    result = Tcl_EvalFile(magicinterp, "magic_setup");
+		    if (result != TCL_OK)
+		    {
+			TxPrintf("No local startup file \"%s\", continuing without.\n",
+					RCFileName);
+			Tcl_ResetResult(magicinterp);	// Still not an error
+		    }
 		}
 	    }
 	}
