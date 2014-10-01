@@ -597,16 +597,16 @@ proc magic::tool {{type next}} {
 	 puts stdout {Switching to BOX tool.}
 	 set Opts(tool) box
 	 cursor 0	;# sets the cursor
-	 macro  Button1          "box move bl cursor"
-	 macro  Shift_Button1    "box corner bl cursor"
+	 macro  Button1          "box move bl cursor; magic::boxview %W %1"
+	 macro  Shift_Button1    "box corner bl cursor; magic::boxview %W %1"
 	 macro  Button2          "paint cursor"
 	 macro  Shift_Button2    "erase cursor"
 	 macro  Button3          "box corner ur cursor"
-	 macro  Shift_Button3    "box move ur cursor"
-	 macro  Button4 "scroll u .05 w"
-	 macro  Button5 "scroll d .05 w"
-	 macro  Shift_Button4 "scroll r .05 w"
-	 macro  Shift_Button5 "scroll l .05 w"
+	 macro  Shift_Button3    "box move ur cursor; magic::boxview %W %1"
+	 macro  Button4 "scroll u .05 w; magic::boxview %W %1"
+	 macro  Button5 "scroll d .05 w; magic::boxview %W %1"
+	 macro  Shift_XK_Pointer_Button4 "scroll r .05 w; magic::boxview %W %1"
+	 macro  Shift_XK_Pointer_Button5 "scroll l .05 w; magic::boxview %W %1"
 
       }
       wiring {

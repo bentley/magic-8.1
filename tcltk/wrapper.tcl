@@ -532,19 +532,19 @@ proc magic::boxview {win {cmdstr ""}} {
       }
 
       set framename [winfo parent $win]
-      set lambda [${win} tech lambda]
-      set lr [expr {(0.0 + [lindex $lambda 0]) / [lindex $lambda 1]}]
+      set cr [cif scale out]
       set bval [${win} box values]
-      set bllx [expr {[lindex $bval 0] * $lr }]
-      set blly [expr {[lindex $bval 1] * $lr }]
-      set burx [expr {[lindex $bval 2] * $lr }]
-      set bury [expr {[lindex $bval 3] * $lr }]
+      set bllx [expr {[lindex $bval 0] * $cr }]
+      set blly [expr {[lindex $bval 1] * $cr }]
+      set burx [expr {[lindex $bval 2] * $cr }]
+      set bury [expr {[lindex $bval 3] * $cr }]
       if {[expr {$bllx == int($bllx)}]} {set bllx [expr {int($bllx)}]}
       if {[expr {$blly == int($blly)}]} {set blly [expr {int($blly)}]}
       if {[expr {$burx == int($burx)}]} {set burx [expr {int($burx)}]}
       if {[expr {$bury == int($bury)}]} {set bury [expr {int($bury)}]}
-      ${framename}.titlebar.pos configure -text \
-		"box ($bllx, $blly) to ($burx, $bury) lambda"
+      set titletext [format "box (%+g %+g) to (%+g %+g) microns" \
+			$bllx $blly $burx $bury]
+      ${framename}.titlebar.pos configure -text $titletext
    }
 }
 
