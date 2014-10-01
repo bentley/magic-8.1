@@ -1144,7 +1144,7 @@ TxTclDispatch(clientData, argc, argv)
     }
 
     SigIOReady = FALSE;
-    SigInterruptOnSigIO = TRUE;
+    if (SigInterruptOnSigIO >= 0) SigInterruptOnSigIO = 1;
     SigInterruptPending = FALSE;
 
     tclcmd = TxNewCommand();
@@ -1186,7 +1186,7 @@ TxTclDispatch(clientData, argc, argv)
 	WindUpdate();
 
     SigInterruptPending = FALSE;
-    SigInterruptOnSigIO = FALSE;
+    if (SigInterruptOnSigIO >= 0) SigInterruptOnSigIO = 0;
     SigIOReady = FALSE;
 
     /* Force a break of DRCContinuous() so we don't run DRC on an	*/
@@ -1246,7 +1246,7 @@ TxDispatch(f)
 	     * it can get done at the end, after all pending commands have
 	     * been processed.
 	     */
-	    SigInterruptOnSigIO = FALSE;
+	    if (SigInterruptOnSigIO >= 0) SigInterruptOnSigIO = 0;
 	    SigInterruptPending = FALSE;
 	    txGetInteractiveCommand(FALSE, &inputCommands);
 	    if (DQIsEmpty(&inputCommands))
@@ -1271,13 +1271,13 @@ TxDispatch(f)
 		     *  command.
 		     */
 		    SigIOReady = FALSE;
-		    SigInterruptOnSigIO = TRUE;
+		    if (SigInterruptOnSigIO >= 0) SigInterruptOnSigIO = 1;
 		    SigInterruptPending = FALSE;
 		    DRCContinuous();
 		    TxUnPrompt();
 
 		    SigIOReady = FALSE;
-		    SigInterruptOnSigIO = FALSE;
+		    if (SigInterruptOnSigIO >= 0) SigInterruptOnSigIO = 0;
 		    SigInterruptPending = FALSE;
 		    (void) GrDisableTablet();
 		    WindUpdate();

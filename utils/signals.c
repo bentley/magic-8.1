@@ -91,8 +91,9 @@ global bool SigInterruptPending = FALSE;
  */
 global bool SigIOReady = FALSE;
 
-/* If true, we will set SigInterruptPending whenever we set SigIOReady. */
-global bool SigInterruptOnSigIO;
+/* If set to 1, we will set SigInterruptPending whenever we set SigIOReady. */
+/* If set to -1, then SigInterruptPending is never set */
+global char SigInterruptOnSigIO;
 
 /*
  * Set to true when we recieve a SIGWINCH/SIGWINDOW signal 
@@ -520,7 +521,7 @@ sigRetVal
 sigIO(int signo)
 {
     SigIOReady = TRUE;
-    if (SigInterruptOnSigIO) sigOnInterrupt(0);
+    if (SigInterruptOnSigIO == 1) sigOnInterrupt(0);
     sigReturn;
 }
 
@@ -611,11 +612,22 @@ sigCrash(signum)
  */
 
 void
-SigInit()
+SigInit(batchmode)
+    int batchmode;
 {
   /* fprintf(stderr, "Establishing signal handlers.\n"); fflush(stderr); */
 
-  sigSetAction(SIGINT,  sigOnInterrupt);
+  if (batchmode)
+  {
+     SigInterruptOnSigIO = -1;
+     sigSetAction(SIGINT, SIG_IGN);
+  }
+  else
+  {
+     SigInterruptOnSigIO = 0;
+     sigSetAction(SIGINT,  sigOnInterrupt);
+  }
+
   sigSetAction(SIGTERM, sigOnTerm);
 
 /* Under Tcl, sigOnStop just causes Tcl to hang forever.  So don't set	*/
@@ -638,7 +650,8 @@ SigInit()
   if( !mainDebug ) {
     sigSetAction(SIGIO, sigIO);
 #ifdef MAGIC_WRAPPER
-    SigTimerDisplay();
+    if (batchmode == 0)
+        SigTimerDisplay();
 #else
     sigSetAction(SIGALRM,  SIG_IGN);
 #endif
@@ -648,17 +661,6 @@ SigInit()
       sigSetAction(SIGPOLL,  SIG_IGN);
 	}
 #endif
-
-#ifdef FANCY_ABORT
-    sigSetAction(SIGILL,  sigCrash);
-    sigSetAction(SIGTRAP, sigCrash);
-    sigSetAction(SIGIOT,  sigCrash);
-    sigSetAction(SIGEMT,  sigCrash);
-    sigSetAction(SIGFPE,  sigCrash);
-    sigSetAction(SIGBUS,  sigCrash);
-    sigSetAction(SIGSEGV, sigCrash);
-    sigSetAction(SIGSYS,  sigCrash);
-#endif /* FANCY_ABORT */
   }
 
 #if !defined(SYSV) && !defined(CYGWIN)

@@ -540,8 +540,16 @@ mainInitAfterArgs()
     if (MainGraphicsFile == NULL) MainGraphicsFile = "/dev/null";
     if (MainMouseFile == NULL) MainMouseFile = MainGraphicsFile;
 
+#ifdef MAGIC_WRAPPER
+    /* Check for batch mode operation and disable interrupts in	*/
+    /* batch mode by not calling SigInit().			*/
+    if (Tcl_GetVar(magicinterp, "batch_mode", TCL_GLOBAL_ONLY) != NULL)
+	SigInit(1);
+    else
+#endif
+
     /* catch signals, must come after mainDoArgs & before SigWatchFile */
-    SigInit();
+    SigInit(0);
 
     /* set up graphics */
     if ( !GrSetDisplay(MainDisplayType, MainGraphicsFile, MainMouseFile) )
