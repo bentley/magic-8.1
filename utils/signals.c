@@ -620,15 +620,13 @@ SigInit(batchmode)
   if (batchmode)
   {
      SigInterruptOnSigIO = -1;
-     sigSetAction(SIGINT, SIG_IGN);
   }
   else
   {
      SigInterruptOnSigIO = 0;
      sigSetAction(SIGINT,  sigOnInterrupt);
+     sigSetAction(SIGTERM, sigOnTerm);
   }
-
-  sigSetAction(SIGTERM, sigOnTerm);
 
 /* Under Tcl, sigOnStop just causes Tcl to hang forever.  So don't set	*/
 /* any new actions.							*/
