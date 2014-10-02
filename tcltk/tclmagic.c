@@ -594,7 +594,7 @@ _magic_startup(ClientData clientData,
 	/* Use the terminal.				  */
 	/* Replace the input proc for stdin with our own. */
 
-	inChannel = Tcl_GetChannelType(Tcl_GetStdChannel(TCL_STDIN));
+	inChannel = (Tcl_ChannelType *)Tcl_GetChannelType(Tcl_GetStdChannel(TCL_STDIN));
 	inChannel->inputProc = TerminalInputProc;
     }
 

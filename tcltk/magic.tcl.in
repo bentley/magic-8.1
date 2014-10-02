@@ -196,6 +196,14 @@ for {set i 0} {$i < $argc} {incr i 1} {
          incr i 1
          lappend argafter [lindex $argv $i]
       }
+      ^--version {
+	 puts stdout "MAGIC_VERSION.MAGIC_REVISION"
+	 exit
+      }
+      ^--prefix {
+	 puts stdout $CAD_ROOT
+	 exit
+      }
       ^-D -
       ^-n* {
          lappend argafter $x

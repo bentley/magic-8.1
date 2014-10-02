@@ -735,8 +735,8 @@ typedef struct LayerInstance {
  */
 
 static int		ImgLayerCreate _ANSI_ARGS_((Tcl_Interp *interp,
-			    char *name, int argc, Tcl_Obj *CONST objv[],
-			    Tk_ImageType *typePtr, Tk_ImageMaster master,
+			    const char *name, int argc, Tcl_Obj *CONST objv[],
+			    const Tk_ImageType *typePtr, Tk_ImageMaster master,
 			    ClientData *clientDataPtr));
 static ClientData	ImgLayerGet _ANSI_ARGS_((Tk_Window tkwin,
 			    ClientData clientData));
@@ -813,11 +813,11 @@ static int
 ImgLayerCreate(interp, name, argc, argv, typePtr, master, clientDataPtr)
     Tcl_Interp *interp;		/* Interpreter for application containing
 				 * image. */
-    char *name;			/* Name to use for image. */
+    const char *name;		/* Name to use for image. */
     int argc;			/* Number of arguments. */
     Tcl_Obj *CONST argv[];	/* Argument objects for options (doesn't
 				 * include image name or type). */
-    Tk_ImageType *typePtr;	/* Pointer to our type record (not used). */
+    const Tk_ImageType *typePtr;/* Pointer to our type record (not used). */
     Tk_ImageMaster master;	/* Token for image, to be used by us in
 				 * later callbacks. */
     ClientData *clientDataPtr;	/* Store manager's token for image here;

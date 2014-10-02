@@ -606,6 +606,8 @@ INSTALL_TARGET
 ALL_TARGET
 OA_LIBS
 OA
+MAGIC_REVISION
+MAGIC_VERSION
 LD_RUN_PATH
 SHLIB_CFLAGS
 DEPEND_FLAG
@@ -7953,6 +7955,9 @@ ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $
 ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 fi
+
+
+
 
 
 
