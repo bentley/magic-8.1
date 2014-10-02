@@ -333,6 +333,9 @@ if {![catch {set winname [magic::openwrapper $cellname]}]} {
    catch {wm geometry .magic1 ${Opts(geometry)}}
 }
 
+# Print the technology name and description
+puts stdout "Using technology \"[tech name]\", version [lindex [tech version] 0]"
+
 # Set a box, and set the view; if no cell has been loaded, choose a default
 # view.
 if {![box exists]} {

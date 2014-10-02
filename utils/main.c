@@ -659,12 +659,18 @@ mainInitAfterArgs()
 	}
     }
 
+#ifndef MAGIC_WRAPPER
+
+    // Let the wrapper script be responsible for formatting and
+    // printing the technology file informaiton.
+
     if (DBTechName != 0) {
 	TxPrintf("Using technology \"%s\"", DBTechName);
 	if (DBTechVersion != 0) TxPrintf(", version %s.", DBTechVersion);
 	TxPrintf("\n");
     }
     if (DBTechDescription != 0) TxPrintf("%s\n", DBTechDescription);
+#endif
 
     /* initialize the undo package */
     (void) UndoInit((char *) NULL, (char *) NULL);
