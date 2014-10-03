@@ -293,16 +293,34 @@ drcCifSpacing(argc, argv)
     drcAssign(dpnew, centidistance, dpnext, &DBSpaceBits,
     		&cmask, why, centidistance, DRC_FORWARD, layer[1], 0);
     drcCifRules[layer[0]][DRC_CIF_SOLID] = dpnew;
+    if (needReverse) dpnew->drcc_flags |= DRC_BOTHCORNERS;
+
+    // Add rule in reverse direction
+    dpnext = drcCifRules[layer[0]][DRC_CIF_SPACE];
+    dpnew = (DRCCookie *) mallocMagic((unsigned) sizeof (DRCCookie));
+    drcAssign(dpnew, centidistance, dpnext, &DBSpaceBits,
+    		&cmask, why, centidistance, DRC_REVERSE, layer[1], 0);
+    drcCifRules[layer[0]][DRC_CIF_SPACE] = dpnew;
     
     if (needReverse)
     {
+	 // This is not so much "reverse" as it is just the
+	 // rule for b->a spacing that matches the a->b spacing.
+
          dpnew->drcc_flags |= DRC_BOTHCORNERS;
          dpnext = drcCifRules[layer[1]][DRC_CIF_SOLID];
          dpnew = (DRCCookie *) mallocMagic((unsigned) (sizeof (DRCCookie)));
          drcAssign(dpnew, centidistance, dpnext, &DBSpaceBits, &cmask,
 		why, centidistance, DRC_FORWARD|DRC_BOTHCORNERS, layer[0], 0);
          drcCifRules[layer[1]][DRC_CIF_SOLID] = dpnew;
-	 
+
+	 // Add rule in reverse direction
+	 dpnext = drcCifRules[layer[1]][DRC_CIF_SPACE];
+	 dpnew = (DRCCookie *) mallocMagic((unsigned) sizeof (DRCCookie));
+	 drcAssign(dpnew, centidistance, dpnext, &DBSpaceBits, &cmask,
+		why, centidistance, DRC_REVERSE|DRC_BOTHCORNERS, layer[0], 0);
+	 drcCifRules[layer[1]][DRC_CIF_SPACE] = dpnew;
+    
 	 if (layer[0] == layer[1])
 	 {
               dpnext = drcCifRules[layer[1]][DRC_CIF_SPACE];
