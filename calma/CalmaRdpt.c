@@ -775,7 +775,16 @@ calmaElementText()
     /* String itself */
     if (!calmaReadStringRecord(CALMA_STRING, &textbody)) return;
 
-    /* Eliminate strange characters. */
+    /* Eliminate characters not in the official GDSII string format set. */
+
+    /* NOTE:  Disabling this 10/3/2014.  I can think of no reason that
+     * other ASCII characters may not be parsed out of a non-compliant
+     * GDS file.  If we want to generate GDS-compliant output, there's
+     * a flag for that in the "cifoutput" section of the techfile.
+     */
+
+#if 0 
+
     {
 	static bool algmsg = FALSE;
 	bool changed = FALSE;
@@ -813,6 +822,8 @@ calmaElementText()
 	    freeMagic(savstring);
 	}
     }
+
+#endif /* 0 */
 
     /* Place the label */
     if (strlen(textbody) == 0)
