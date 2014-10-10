@@ -197,10 +197,12 @@ drcCifWidth(argc, argv)
 
     scalefactor = drcCifStyle->cs_scaleFactor;
     centidistance *= drcCifStyle->cs_expander;		// BSI
+
     dpnext = drcCifRules[thislayer][DRC_CIF_SPACE];
     dpnew = (DRCCookie *) mallocMagic((unsigned) (sizeof (DRCCookie)));
     drcAssign(dpnew, centidistance, dpnext, &CIFSolidBits,
-    		&CIFSolidBits, why, centidistance, DRC_FORWARD, thislayer, 0);
+    		&CIFSolidBits, why, centidistance,
+		DRC_FORWARD, thislayer, 0);
     drcCifRules[thislayer][DRC_CIF_SPACE] = dpnew;
 
     return ((centidistance+scalefactor-1)/scalefactor);

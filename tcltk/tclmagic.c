@@ -300,6 +300,7 @@ static int
 _tcl_dispatch(ClientData clientData,
         Tcl_Interp *interp, int argc, char *argv[])
 {
+    bool wval; 
     int result, idx;
     Tcl_Obj *objv0;
     char *argv0, *tkwind;
@@ -382,7 +383,8 @@ _tcl_dispatch(ClientData clientData,
     if (TxInputRedirect == TX_INPUT_REDIRECTED)
 	TxInputRedirect = TX_INPUT_PENDING_RESET;
 
-    TxTclDispatch(clientData, argc, argv);
+    wval = TxTclDispatch(clientData, argc, argv);
+
     if (TxInputRedirect == TX_INPUT_PENDING_RESET)
 	TxInputRedirect = TX_INPUT_NORMAL;
 
@@ -407,6 +409,8 @@ _tcl_dispatch(ClientData clientData,
     else
 	tkwind = NULL;
 
+    // Pass back an error if TxTclDispatch failed
+    if (wval == FALSE) return TCL_ERROR;
     return TagCallback(interp, tkwind, argc, argv);
 }
 

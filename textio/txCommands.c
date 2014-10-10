@@ -1126,7 +1126,7 @@ txGetFileCommand(f, queue)
  * ----------------------------------------------------------------------------
  */
 
-void
+bool
 TxTclDispatch(clientData, argc, argv)
    ClientData clientData;
    int argc;
@@ -1203,6 +1203,7 @@ TxTclDispatch(clientData, argc, argv)
 
     /* Reinstate the idle call */
     if (result != FALSE) Tcl_DoWhenIdle(DRCContinuous, (ClientData)NULL);
+    return result;
 }
 #else  /* !MAGIC_WRAPPER */
 

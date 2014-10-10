@@ -554,7 +554,7 @@ proc magic::cursorview {win} {
       return
    }
    set framename [winfo parent $win]
-   set cr [cif scale out]
+   if {[catch {set cr [cif scale out]}]} {return}
    if {$cr == 0} {return}
    set olst [${win} cursor internal]
    set olstx [expr [lindex $olst 0] * $cr]
