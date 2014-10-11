@@ -948,6 +948,7 @@ SelectCell(use, rootDef, trans, replace)
 	(void) DBCellDeleteUse(selectLastUse);
 	SelRememberForUndo(FALSE, SelectRootDef, &area);
 	DBWHLRedraw(SelectRootDef, &area, TRUE);
+	selectLastUse = (CellUse *)NULL;
     }
 
     /* When creating a new use, try to re-use the id from the old

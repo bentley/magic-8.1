@@ -1176,6 +1176,7 @@ TxTclDispatch(clientData, argc, argv)
     if (DRCBackGround != DRC_SET_OFF) DRCBackGround = DRC_NOT_SET;
 
     result = WindSendCommand((MagWindow *)clientData, tclcmd);
+
     TxFreeCommand(tclcmd);
     TxCommandNumber++;
 

@@ -747,7 +747,7 @@ CmdSelect(w, cmd)
     static Rect chunkSelection;	/* Used to remember the size of the last chunk
 				 * selected.
 				 */
-    static int level;		/* How big a piece to select.  See definitions
+    static int level = 0;	/* How big a piece to select.  See definitions
 				 * below.
 				 */
     static CellUse *lastUse;	/* The last cellUse selected.  Used to step
@@ -856,6 +856,14 @@ CmdSelect(w, cmd)
 	    else
 		optionArgs = &cmd->tx_argv[0];
 	}
+
+	/* options other than SEL_DEFAULT and the ones that cycle
+	 * through (SEL_BOX/CHUNK/REGION/NET) force "level" back
+	 * to 0.
+	 */
+	if (option != SEL_BOX && option != SEL_CHUNK && option !=
+		SEL_REGION && option != SEL_NET)
+	    level = 0;
     }
 
 #ifndef NO_SIM_MODULE
@@ -1206,17 +1214,19 @@ Okay:
 		{
 		    if (samePlace && lessCycle == less)
 		    {
-			level += 1;
+			level++;
 			if (level > SEL_NET) level = SEL_CHUNK;
 		    }
 		    else level = SEL_CHUNK;
 
-		    if (level != SEL_CHUNK && !TTMaskHasType (&mask, type)) {
+		    if ((level == 1) || (level != SEL_CHUNK &&
+				!TTMaskHasType (&mask, type))) {
 			/* User specified a new mask, and the current tile
 			 * type being expanded is not in the set of types
 			 * which the user wants us to use => reset level
 			 */
 			level = SEL_CHUNK;
+			SelectClear();
 		    }
 		}
 
