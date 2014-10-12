@@ -413,7 +413,11 @@ toglSetProjection(llx, lly, width, height)
 
     /* scale to fit window */
 
+#ifdef OGL_INVERT_Y
+    glScalef(1.0 / (float)(width >> 1), 1.0 / -(float)(height >> 1), 1.0);
+#else
     glScalef(1.0 / (float)(width >> 1), 1.0 / (float)(height >> 1), 1.0);
+#endif
 
     /* magic origin maps to window center; move to window origin */
 

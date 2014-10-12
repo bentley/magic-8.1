@@ -736,6 +736,7 @@ enable_locking
 enable_calma
 enable_cif
 enable_client_render
+enable_invert_y
 enable_framebuffer_backing_store
 enable_plot
 enable_lef
@@ -1383,6 +1384,7 @@ Optional Features:
   --disable-calma        disable calma package
   --disable-cif        disable cif package
   --disable-client-render        disable OpenGL client-side rendering
+  --enable-invert-y        invert screen top to bottom in OpenGL
   --enable-framebuffer-backing-store     enable OpenGL framebuffer backing store
   --disable-plot	disable plot package
   --disable-lef	disable LEF package
@@ -6558,6 +6560,19 @@ fi
 
 if test "x$enable_client_render" = "xno" ; then
   $as_echo "#define OGL_SERVER_SIDE_ONLY 1" >>confdefs.h
+
+fi
+
+# Check whether --enable-invert-y was given.
+if test "${enable_invert_y+set}" = set; then :
+  enableval=$enable_invert_y;
+else
+  enable_invert_y=no
+fi
+
+
+if test "x$enable_invert_y" = "xyes" ; then
+  $as_echo "#define OGL_INVERT_Y 1" >>confdefs.h
 
 fi
 
