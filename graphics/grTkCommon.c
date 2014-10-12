@@ -825,7 +825,7 @@ ImgLayerCreate(interp, name, argc, argv, typePtr, master, clientDataPtr)
 {
     LayerMaster *masterPtr;
 
-    masterPtr = (LayerMaster *) ckalloc(sizeof(LayerMaster));
+    masterPtr = (LayerMaster *) Tcl_Alloc(sizeof(LayerMaster));
     masterPtr->tkMaster = master;
     masterPtr->interp = interp;
     masterPtr->imageCmd = Tcl_CreateObjCommand(interp, name, ImgLayerCmd,
@@ -994,8 +994,6 @@ ImgLayerConfigureInstance(instancePtr)
     }
 
     if (instancePtr->pixmap != None) {
-	Tk_FreePixmap(grXdpy, instancePtr->pixmap);
-	instancePtr->pixmap = None;
 	mw = WindSearchData((ClientData)instancePtr->pixmap);
 	if (mw != NULL)
 	{
@@ -1003,6 +1001,8 @@ ImgLayerConfigureInstance(instancePtr)
 	    windReClip();
 	    windFree(mw);
 	}
+	Tk_FreePixmap(grXdpy, instancePtr->pixmap);
+	instancePtr->pixmap = None;
     }
 
     if (masterPtr->layerString != NULL) {
@@ -1090,6 +1090,7 @@ ImgLayerConfigureInstance(instancePtr)
 	tmpmw.w_flags = WIND_OFFSCREEN;
 	tmpmw.w_grdata = (ClientData)instancePtr->pixmap;
 	tmpmw.w_allArea = r;
+	tmpmw.w_clipAgainst = NULL;
 
 	GrLock(&tmpmw, FALSE);
 
@@ -1380,7 +1381,6 @@ ImgLayerFree(clientData, display)
 
     if (instancePtr->pixmap != None) {
 	MagWindow *mw;
-	Tk_FreePixmap(display, instancePtr->pixmap);
 	mw = WindSearchData((ClientData)instancePtr->pixmap);
 	if (mw != NULL)
 	{
@@ -1388,6 +1388,7 @@ ImgLayerFree(clientData, display)
 	    windReClip();
 	    windFree(mw);
 	}
+	Tk_FreePixmap(display, instancePtr->pixmap);
     }
     if (instancePtr->masterPtr->instancePtr == instancePtr) {
 	instancePtr->masterPtr->instancePtr = instancePtr->nextPtr;

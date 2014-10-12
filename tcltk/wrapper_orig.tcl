@@ -938,46 +938,18 @@ proc magic::openwrapper {{cell ""} {framename ""}} {
    # Menu buttons
    frame ${framename}.titlebar.mbuttons
 
-# File
    menubutton ${framename}.titlebar.mbuttons.file -text File -relief raised \
-		-menu ${framename}.titlebar.mbuttons.file.toolmenu -borderwidth 2
-# Edit
+		-menu ${framename}.titlebar.mbuttons.file.filemenu -borderwidth 2
    menubutton ${framename}.titlebar.mbuttons.edit -text Edit -relief raised \
-		-menu ${framename}.titlebar.mbuttons.edit.toolmenu -borderwidth 2
-# Cell
-   menubutton ${framename}.titlebar.mbuttons.cell -text Cell -relief raised \
-		-menu ${framename}.titlebar.mbuttons.cell.toolmenu -borderwidth 2
-# Window
-   menubutton ${framename}.titlebar.mbuttons.win -text Window -relief raised \
-		-menu ${framename}.titlebar.mbuttons.win.toolmenu -borderwidth 2
-# Pcell
-   menubutton ${framename}.titlebar.mbuttons.pcell -text Pcell -relief raised \
-		-menu ${framename}.titlebar.mbuttons.pcell.toolmenu -borderwidth 2
-# Layers
-   menubutton ${framename}.titlebar.mbuttons.layers -text Layers -relief raised \
-		-menu ${framename}.titlebar.mbuttons.layers.toolmenu -borderwidth 2
-# DRC
-   menubutton ${framename}.titlebar.mbuttons.drc -text Drc -relief raised \
-		-menu ${framename}.titlebar.mbuttons.drc.toolmenu -borderwidth 2
-# Netlist
-#   menubutton ${framename}.titlebar.mbuttons.netlist -text Neltist -relief raised \
-#		-menu ${framename}.titlebar.mbuttons.netlist.netlistmenu -borderwidth 2
-# Help
-#   menubutton ${framename}.titlebar.mbuttons.help -text Help -relief raised \
-#		-menu ${framename}.titlebar.mbuttons.help.helpmenu -borderwidth 2
-# Options
+		-menu ${framename}.titlebar.mbuttons.edit.editmenu -borderwidth 2
+   menubutton ${framename}.titlebar.mbuttons.view -text View -relief raised \
+		-menu ${framename}.titlebar.mbuttons.view.viewmenu -borderwidth 2
    menubutton ${framename}.titlebar.mbuttons.opts -text Options -relief raised \
-		-menu ${framename}.titlebar.mbuttons.opts.toolmenu -borderwidth 2
-   pack ${framename}.titlebar.mbuttons.file   -side left
-   pack ${framename}.titlebar.mbuttons.edit   -side left
-   pack ${framename}.titlebar.mbuttons.cell   -side left
-   pack ${framename}.titlebar.mbuttons.win    -side left
-   pack ${framename}.titlebar.mbuttons.pcell  -side left
-   pack ${framename}.titlebar.mbuttons.layers -side left
-   pack ${framename}.titlebar.mbuttons.drc    -side left
-#   pack ${framename}.titlebar.mbuttons.netlist -side left
-#   pack ${framename}.titlebar.mbuttons.help    -side left
-   pack ${framename}.titlebar.mbuttons.opts    -side left
+		-menu ${framename}.titlebar.mbuttons.opts.optsmenu -borderwidth 2
+   pack ${framename}.titlebar.mbuttons.file -side left
+   pack ${framename}.titlebar.mbuttons.edit -side left
+   pack ${framename}.titlebar.mbuttons.view -side left
+   pack ${framename}.titlebar.mbuttons.opts -side left
 
    # DRC status button
    checkbutton ${framename}.titlebar.drcbutton -text "DRC" -anchor w \
@@ -1032,150 +1004,75 @@ proc magic::openwrapper {{cell ""} {framename ""}} {
    set Winopts(${framename},toolbar) 0
    set Winopts(${framename},cmdentry) 0
 
-# #################################
-# File
-# #################################
-   set m [menu ${framename}.titlebar.mbuttons.file.toolmenu -tearoff 0]
-   $m add command -label "New" -command "magic::openwrapper"
-   # $m add command -label "New" -command "magic::openwrapper \
-		# [${winname} cellname list window]"
-   $m add command -label "Open...   "        -command {magic::promptload magic}
-   $m add command -label "Save      "        -command {magic::save }
-   # $m add command -label "Save      "        -command {magic::promptsave magic}
-   $m add command -label "Save as..."        -command {echo "not implemented"}
-   $m add command -label "Save selection..." -command {echo "not implemented"}
-   $m add separator
-   $m add command -label "Close"             -command "magic::closewrapper ${framename}"
-   $m add separator
-   $m add command -label "Flush changes "    -command {magic::flush}
-   $m add command -label "Delete "           -command {magic::cellname delete [magic::cellname list window]}
-   $m add separator
-   #$m add command -label "Read CIF" -command {magic::promptload cif}
-   $m add command -label "Read GDS"          -command {magic::promptload gds}
-   #$m add separator
-   #$m add command -label "Write CIF" -command {magic::promptsave cif}
-   $m add command -label "Write GDS"         -command {magic::promptsave gds}
-   $m add separator
-   $m add command -label "Print..."          -command { echo "not implemented" }
-   $m add separator
-   $m add command -label "Save All and Quit" -command {magic::writeall force ; magic::quit -noprompt }
-   $m add command -label "Quit"              -command {magic::quit}
+   # Generate the file menu
 
-# #################################
-# Edit
-# #################################
+   set m [menu ${framename}.titlebar.mbuttons.file.filemenu -tearoff 0]
+   $m add command -label "New window" -command "magic::openwrapper \
+		[${winname} cellname list window]"
+   $m add command -label "Close" -command "magic::closewrapper ${framename}"
+   $m add separator
+   $m add command -label "Place Cell" -command {magic::promptload getcell}
+   $m add separator
+   $m add command -label "Load layout" -command {magic::promptload magic}
+   $m add command -label "Read CIF" -command {magic::promptload cif}
+   $m add command -label "Read GDS" -command {magic::promptload gds}
+   $m add separator
+   $m add command -label "Save layout" -command {magic::promptsave magic}
+   $m add command -label "Write CIF" -command {magic::promptsave cif}
+   $m add command -label "Write GDS" -command {magic::promptsave gds}
+   $m add separator
+   $m add command -label "Flush current" -command {magic::flush}
+   $m add command -label "Delete current" -command {magic::cellname delete \
+		[magic::cellname list window]}
+   $m add separator
+   $m add command -label "Quit" -command {magic::quit}
 
-   set m [menu ${framename}.titlebar.mbuttons.edit.toolmenu -tearoff 0]
-   $m add command -label "Cut              " -command { echo "not implemented" }
-   $m add command -label "Copy             " -command { echo "not implemented" }
-   $m add command -label "Paste            " -command { echo "not implemented" }
-   $m add command -label "Delete           " -command { delete }
-   $m add separator
-   $m add command -label "Select Area      " -command { select area }
-   $m add command -label "Select Clear     " -command { select clear }
-   $m add separator
+   # Generate the edit menu
+
+   set m [menu ${framename}.titlebar.mbuttons.edit.editmenu -tearoff 0]
    $m add command -label "Undo          (u)" -command {magic::undo}
    $m add command -label "Redo          (U)" -command {magic::redo}
-   $m add command -label "Repeat Last      " -command { echo "not implemented" }
    $m add separator
    $m add command -label "Rotate 90 degree " -command {magic::clock}
-   $m add command -label "Mirror   Up/Down "  -command {magic::upsidedown}
-   $m add command -label "Mirror Left/Right" -command {magic::sideways}
-   $m add separator
-   $m add command -label "Move Right       " -command {move right 1}
-   $m add command -label "Move Left        " -command {move left  1}
-   $m add command -label "Move Up          " -command {move up    1}
-   $m add command -label "Move Down        " -command {move down  1}
-   $m add separator
-   $m add command -label "Stretch Right    " -command { stretch right 1}
-   $m add command -label "Stretch Left     " -command { stretch left  1}
-   $m add command -label "Stretch Up       " -command { stretch up    1}
-   $m add command -label "Stretch Down     " -command { stretch down  1}
+   $m add command -label "Flip Horizontal" -command {magic::sideways}
+   $m add command -label "Flip Vertical"   -command {magic::upsidedown}
    $m add separator
    $m add command -label "Text ..." \
 		-command [subst { magic::update_texthelper; \
 		wm deiconify .texthelper ; raise .texthelper } ]
+   $m add separator
+   $m add command -label "Lock   Cell      " -command {magic::instance lock}
+   $m add command -label "Unlock Cell      " -command {magic::instance unlock}
+   $m add separator
+   $m add command -label "Unlock Base Layers" -command {magic::tech layer unlock *}
 
-# #################################
-# Cell
-# #################################
-   set m [menu ${framename}.titlebar.mbuttons.cell.toolmenu -tearoff 0]
-   $m add command -label "Select           " -command {magic::select cell}
-   $m add command -label "Place Instance   " -command {magic::promptload getcell}
-   $m add command -label "Rename           " -command {echo "not implemented" }
+   # Generate the view menu
+
+   set m [menu ${framename}.titlebar.mbuttons.view.viewmenu -tearoff 0]
+   $m add command -label "Zoom In   " -command {magic::zoom 0.5}
+   $m add command -label "Zoom Out      (Z)" -command {magic::zoom 2}
+   $m add command -label "Zoom Sel      (z)" -command {magic::findbox zoom}
+   $m add command -label "Full" -command {magic::select top cell ; findbox zoom}
    $m add separator
-   $m add command -label "Down hierarchy   " -command {magic::pushstack}
-   $m add command -label "Up   hierarchy   " -command {magic::popstack}
-   $m add separator
-   $m add command -label "Edit             " -command {magic::edit }
+   $m add command -label "Grid 0.10u        " -command {magic::setgrid 0.1}
+   $m add command -label "Grid 0.20u        " -command {magic::setgrid 0.2}
+   $m add command -label "Grid 0.25u        " -command {magic::setgrid 0.25}
+   $m add command -label "Grid 0.40u        " -command {magic::setgrid 0.4}
+   $m add command -label "Grid 0.5u        " -command {magic::setgrid 0.5}
+   $m add command -label "Grid 1.0u        " -command {magic::setgrid 1}
+   $m add command -label "Grid 2.0u        " -command {magic::setgrid 2}
+   $m add command -label "Grid 4.0u        " -command {magic::setgrid 4}
+   $m add command -label "Grid 5.0u        " -command {magic::setgrid 5}
+   $m add command -label "Grid 10.0u        " -command {magic::setgrid 10}
+   $m add command -label "Grid 50.0u        " -command {magic::setgrid 50}
    $m add separator
    $m add command -label "Expand Toggle (/)" -command {magic::expand toggle}
    $m add command -label "Expand        (x)" -command {magic::expand }
    $m add command -label "Unexpand      (X)" -command {magic::unexpand }
-   $m add separator
-   $m add command -label "Lock   Cell      " -command {magic::instance lock}
-   $m add command -label "Unlock Cell      " -command {magic::instance unlock}
 
-# #################################
-# Window
-# #################################
-   set m [menu ${framename}.titlebar.mbuttons.win.toolmenu -tearoff 0]
-   $m add command -label "Full          (f)" -command {magic::view }
-   $m add command -label "Redraw           " -command {}
-   $m add command -label "Zoom Out      (Z)" -command {magic::zoom 2}
-   $m add command -label "Zoom In          " -command {magic::zoom 0.5}
-   $m add command -label "Zoom Box      (z)" -command {magic::findbox zoom}
-   $m add separator
-   $m add command -label "Pan Left         " -command {}
-   $m add command -label "Pan Right        " -command {}
-   $m add command -label "Pan Up           " -command {}
-   $m add command -label "Pan Down         " -command {}
-   $m add separator
-   $m add command -label "Grid on          " -command {magic::grid on  }
-   $m add command -label "Grid off         " -command {magic::grif off }
-   $m add command -label "Snap to grid on  " -command {magic::snap on  }
-   $m add command -label "Snap to grid off " -command {magic::snap off }
-   $m add command -label "Measure box      " -command {magic::box }
-   $m add separator
-   $m add command -label "Set grid 0.05um  " -command {magic::grid 0.05um}
-   $m add command -label "Set grid 0.10um  " -command {magic::grid 0.10um}
-   $m add command -label "Set grid 0.50um  " -command {magic::grid 0.50um}
-   $m add command -label "Set grid 1.00um  " -command {magic::grid 1.00um}
-   $m add command -label "Set grid 5.00um  " -command {magic::grid 5.00um}
-   $m add command -label "Set grid 10.0um  " -command {magic::grid 10.0um}
-   $m add command -label "Set grid ....    " -command {echo "Not implemented"}
+   # Generate the options menu
 
-# #################################
-# Pcells
-# #################################
-   set m [menu ${framename}.titlebar.mbuttons.pcell.toolmenu -tearoff 0]
-   # $m add command -label "Create Pcell..." -command {}
-
-# #################################
-# Layers
-# #################################
-   set m [menu ${framename}.titlebar.mbuttons.layers.toolmenu -tearoff 0]
-   $m add command -label "Protect Base Layers" -command {magic::tech layer relock  }
-   $m add command -label "Unlock  Base Layers" -command {magic::tech layer unlock *}
-   $m add separator
-   $m add command -label "Clear Feedback"      -command {magic::feedback clear}
-   $m add separator
-
-# #################################
-# DRC
-# #################################
-   set m [menu ${framename}.titlebar.mbuttons.drc.toolmenu -tearoff 0]
-   $m add command -label "DRC On" -command {}
-   $m add command -label "DRC Off" -command {}
-   $m add separator
-   $m add command -label "DRC update" -command { drc check ; drc why}
-   $m add command -label "DRC report" -command { drc why }
-   $m add command -label "DRC Find next error" -command { drc find ; findbox zoom }
-   $m add separator
-   $m add command -label "DRC Fast"     -command {drc style drc(fast) }
-   $m add command -label "DRC Complete" -command {drc style drc(full) }
-
-   set m [menu ${framename}.titlebar.mbuttons.opts.toolmenu -tearoff 0]
+   set m [menu ${framename}.titlebar.mbuttons.opts.optsmenu -tearoff 0]
    $m add check -label "Toolbar" -variable Winopts(${framename},toolbar) \
 	-command [subst {if { \$Winopts(${framename},toolbar) } { \
 		magic::maketoolbar ${framename} ; \
@@ -1348,39 +1245,5 @@ proc magic::render3d {{cell ""}} {
    pack .render.title.msg -side right -fill x -expand true
    pack .render.magic -expand true -fill both -side bottom
    bind .render.magic <Enter> {focus %W}
-}
-
-######################################################################
-# Visual Menu Helper Functions - Bertrand Irissou
-######################################################################
-
-###
-###  Add a menu button to the Magic wrapper window for the toolkit
-###
-proc magic::add_menu {framename toolname button_text } {
-   menubutton ${framename}.titlebar.mbuttons.${toolname} \
-		-text $button_text \
-		-relief raised \
-		-menu ${framename}.titlebar.mbuttons.${toolname}.toolmenu \
-		-borderwidth 2
-
-   menu ${framename}.titlebar.mbuttons.${toolname}.toolmenu -tearoff 0
-   pack ${framename}.titlebar.mbuttons.${toolname} -side left
-}
-
-###
-###  Add a command item to the toolkit menu
-###
-proc magic::add_menu_command {framename toolname button_text command} {
-   set m ${framename}.titlebar.mbuttons.${toolname}.toolmenu
-   $m add command -label "$button_text" -command $command 
-}
-
-###
-### Add a separator to a menu
-###
-proc magic::add_menu_separator {framename toolname} {
-   set m ${framename}.titlebar.mbuttons.${toolname}.toolmenu
-   $m add separator
 }
 
