@@ -39,6 +39,9 @@ set Glyph(right) [image create bitmap \
 set Glyph(zoom) [image create bitmap \
 	-file ${CAD_ROOT}/magic/tcl/bitmaps/zoom.xbm \
 	-background gray -foreground steelblue]
+set Glyph(lock) [image create bitmap \
+	-file ${CAD_ROOT}/magic/tcl/bitmaps/lock.xbm \
+	-background gray80 -foreground steelblue4]
 
 # Menu button callback functions
 
@@ -614,8 +617,10 @@ proc magic::toolupdate {win {yesno "yes"} {layerlist "none"}} {
       if {$layer != "none"} {
          if {$yesno == "yes"} {
 	    ${framename}.toolbar.b$canon configure -image img_$canon 
+	    ${framename}.toolbar.p$canon configure -image pale_$canon 
          } else {
 	    ${framename}.toolbar.b$canon configure -image img_space
+	    ${framename}.toolbar.p$canon configure -image img_space
 	 }
       }
    }
@@ -682,24 +687,55 @@ proc magic::maketoolbar { framename } {
 		"$win select less area $layername"
    }
 
+   # Create an additional set of layers and buttons in the "disabled" style
+   # These buttons can be swapped in place of the regular buttons when the
+   # layer is locked.  They define no bindings except "u" for "unlock",
+   # and the button bindings (see, see no)
+
+   foreach layername $all_layers {
+      image create layer pale_$layername -name $layername -disabled true
+      button ${framename}.toolbar.p$layername -image pale_$layername -command \
+		"$win see $layername"
+      bind ${framename}.toolbar.p$layername <ButtonPress-3> \
+		"$win see no $layername"
+      bind ${framename}.toolbar.p$layername <Enter> \
+		[subst {focus %W ; ${framename}.titlebar.message configure \
+		 -text "$layername (locked)"}]
+      bind ${framename}.toolbar.p$layername <Leave> \
+		[subst {${framename}.titlebar.message configure -text ""}]
+   }
+
    # Figure out how many columns we need to fit all the layer buttons inside
    # the toolbar without going outside the window area.
 
+   set locklist [tech layer locked]
    set ncols 1
    while {1} {
       incr ncols
       set i 0
       set j 0
       foreach layername $all_layers {
-         grid ${framename}.toolbar.b$layername -row $i -column $j -sticky news
+	 if {[lsearch $locklist $layername] >= 0} {
+            grid ${framename}.toolbar.p$layername -row $i -column $j -sticky news
+	 } else {
+            grid ${framename}.toolbar.b$layername -row $i -column $j -sticky news
+	 }
+	 bind ${framename}.toolbar.p$layername <KeyPress-u> \
+		"$win tech layer unlock $layername ; \
+		grid forget ${framename}.toolbar.p$layername ; \
+		grid ${framename}.toolbar.b$layername \
+		-row $i -column $j -sticky news"
+	 bind ${framename}.toolbar.b$layername <KeyPress-l> \
+		"$win tech layer lock $layername ; \
+		grid forget ${framename}.toolbar.b$layername ; \
+		grid ${framename}.toolbar.p$layername \
+		-row $i -column $j -sticky news"
          incr j
          if {$j == $ncols} {
 	    set j 0
 	    incr i
          }
       }
-      # tkwait visibility ${framename}.toolbar
-      update idletasks
       set toolheight [lindex [grid bbox ${framename}.toolbar] 3]
       if {$toolheight <= $winheight} {break}
    }
@@ -1029,7 +1065,7 @@ proc magic::openwrapper {{cell ""} {framename ""}} {
       catch {wm geometry ${framename} $Opts(geometry)}
    }
 
-   set Winopts(${framename},toolbar) 0
+   set Winopts(${framename},toolbar) 1
    set Winopts(${framename},cmdentry) 0
 
 # #################################
@@ -1155,7 +1191,7 @@ proc magic::openwrapper {{cell ""} {framename ""}} {
 # Layers
 # #################################
    set m [menu ${framename}.titlebar.mbuttons.layers.toolmenu -tearoff 0]
-   $m add command -label "Protect Base Layers" -command {magic::tech layer relock  }
+   $m add command -label "Protect Base Layers" -command {magic::tech layer revert  }
    $m add command -label "Unlock  Base Layers" -command {magic::tech layer unlock *}
    $m add separator
    $m add command -label "Clear Feedback"      -command {magic::feedback clear}
@@ -1245,8 +1281,15 @@ proc magic::openwrapper {{cell ""} {framename ""}} {
 
    magic::captions
 
+   # If the toolbar is turned on, invoke the toolbar button
+   if { $Winopts(${framename},toolbar) == 1} {
+      magic::maketoolbar ${framename}
+      grid ${framename}.toolbar -row 1 -column 2 -rowspan 2 -sticky new
+   }
+
    # Remove "open" and "close" macros so they don't generate non-GUI
    # windows or (worse) blow away the window inside the GUI frame
+
    if {[magic::macro list o] == "openwindow"} {
       magic::macro o "openwrapper"
    }

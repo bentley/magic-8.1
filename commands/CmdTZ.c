@@ -333,7 +333,8 @@ CmdTech(w, cmd)
 		    TTMaskAndMask(&lockedLayers, &DBAllButSpaceAndDRCBits);
 		    DBTechPrintTypes(&lockedLayers, TRUE);
 		}
-		else if (!strcmp(cmd->tx_argv[2], "revert"))
+		else if (!strcmp(cmd->tx_argv[2], "revert") ||
+			!strcmp(cmd->tx_argv[2], "relock"))
 		{
 		    // Copy DBTechActiveLayerBits back to DBActiveLayerBits
 		    TTMaskZero(&DBActiveLayerBits);

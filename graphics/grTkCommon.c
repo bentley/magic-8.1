@@ -1319,7 +1319,7 @@ ImgLayerGet(tkwin, masterData)
 static void
 ImgLayerDisplay(clientData, display, drawable, imageX, imageY, width,
 	height, drawableX, drawableY)
-    ClientData clientData;	/* Pointer to BitmapInstance structure for
+    ClientData clientData;	/* Pointer to LayerInstance structure for
 				 * for instance to be displayed. */
     Display *display;		/* Display on which to draw image. */
     Drawable drawable;		/* Pixmap or window in which to draw image. */
@@ -1362,7 +1362,7 @@ ImgLayerDisplay(clientData, display, drawable, imageX, imageY, width,
 
 static void
 ImgLayerFree(clientData, display)
-    ClientData clientData;	/* Pointer to BitmapInstance structure for
+    ClientData clientData;	/* Pointer to LayerInstance structure for
 				 * for instance to be displayed. */
     Display *display;		/* Display containing window that used image. */
 {
