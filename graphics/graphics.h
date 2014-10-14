@@ -78,6 +78,7 @@ extern void GrSetStuff();
 extern void GrDrawFastBox();
 extern void GrGuessDisplayType();
 extern int  GrGetStyleFromName();
+extern bool GrDrawGlyphNum();
 
 #define GrFastBox(x)	GrDrawFastBox(x, 0)
 

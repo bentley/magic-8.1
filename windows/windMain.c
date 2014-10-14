@@ -101,7 +101,6 @@ void
 WindInit()
 {
     extern Stack *windGrabberStack;
-    extern GrGlyphs *windGlyphs;
     Rect ts;
     char glyphName[30];
 

@@ -98,6 +98,21 @@ GR_STYLE_LINE *GrStyleTable;
 
 
 
+bool
+GrDrawGlyphNum(num, xoff, yoff)
+    int num;
+    int xoff;
+    int yoff;
+{
+    Point p;
+
+    p.p_x = xoff;
+    p.p_y = yoff;
+    if (num >= grCursorGlyphs->gr_num) return FALSE;
+    GrDrawGlyph(grCursorGlyphs->gr_glyph[num], &p);
+    return TRUE;
+}
+
 /*
  * ----------------------------------------------------------------------------
  *

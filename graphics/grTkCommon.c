@@ -705,6 +705,7 @@ typedef struct LayerMaster {
 				 * deleted. */
     int width, height;		/* Dimensions of image. */
     int layerOff;		/* If TRUE layer is displayed in non-edit style */
+    int layerLock;		/* Layer is displayed with a cursor icon */
     char *layerString;		/* Value of -layer option (malloc'ed). */
     struct LayerInstance *instancePtr;
 				/* First in list of all instances associated
@@ -769,6 +770,8 @@ static Tk_ConfigSpec configSpecs[] = {
 	(char *) NULL, Tk_Offset(LayerMaster, layerString), TK_CONFIG_NULL_OK},
     {TK_CONFIG_BOOLEAN, "-disabled", (char *) NULL, (char *) NULL,
 	(char *) "0", Tk_Offset(LayerMaster, layerOff), 0},
+    {TK_CONFIG_INT, "-icon", (char *) NULL, (char *) NULL,
+	(char *) "-1", Tk_Offset(LayerMaster, layerLock), 0},
     {TK_CONFIG_INT, "-width", (char *) NULL, (char *) NULL,
 	(char *) "16", Tk_Offset(LayerMaster, width), 0},
     {TK_CONFIG_INT, "-height", (char *) NULL, (char *) NULL,
@@ -832,6 +835,7 @@ ImgLayerCreate(interp, name, argc, argv, typePtr, master, clientDataPtr)
 	    (ClientData) masterPtr, ImgLayerCmdDeletedProc);
     masterPtr->width = masterPtr->height = 0;
     masterPtr->layerOff = 0;
+    masterPtr->layerLock = -1;
     masterPtr->layerString = NULL;
     masterPtr->instancePtr = NULL;
     if (ImgLayerConfigureMaster(masterPtr, argc, argv, 0) != TCL_OK) {
@@ -1139,7 +1143,8 @@ ImgLayerConfigureInstance(instancePtr)
 		grDrawOffScreenBox(&r);
 		break;
 	}
-
+	if (masterPtr->layerLock >= 0)
+	    GrDrawGlyphNum(masterPtr->layerLock, 0, 0);
 	GrUnlock(&tmpmw);
     }
 

@@ -693,7 +693,8 @@ proc magic::maketoolbar { framename } {
    # and the button bindings (see, see no)
 
    foreach layername $all_layers {
-      image create layer pale_$layername -name $layername -disabled true
+      image create layer pale_$layername -name $layername -disabled true \
+		-icon 23
       button ${framename}.toolbar.p$layername -image pale_$layername -command \
 		"$win see $layername"
       bind ${framename}.toolbar.p$layername <ButtonPress-3> \
