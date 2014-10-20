@@ -378,7 +378,7 @@ windBypassCmd(w, cmd)
     }
 
     /* Dispatch the referenced command */
-    TxTclDispatch((ClientData)w, cmd->tx_argc - 1, cmd->tx_argv + 1);
+    TxTclDispatch((ClientData)w, cmd->tx_argc - 1, cmd->tx_argv + 1, FALSE);
     if (TxInputRedirect == TX_INPUT_PENDING_RESET)
 	TxInputRedirect = TX_INPUT_REDIRECTED;
 }
@@ -468,10 +468,18 @@ windCursorCmd(w, cmd)
 	{
 	    resulttype = DBW_SNAP_MICRONS;
 	}
-	else if (*cmd->tx_argv[1] !=  'i')
+	else if (*cmd->tx_argv[1] == 'w')
+	{
+	    resulttype = -1;	// Use this value for "window"
+	}
+	else if (*cmd->tx_argv[1] == 's')
+	{
+	    resulttype = -2;	// Use this value for "screen"
+	}
+	else if (*cmd->tx_argv[1] != 'i')
 	{
 	    TxError("Usage: cursor glyphnum\n");
-	    TxError(" (or): cursor [internal | lambda | microns | user]\n");
+	    TxError(" (or): cursor [internal | lambda | microns | user | window]\n");
 	    return;
 	}
     }
@@ -479,15 +487,27 @@ windCursorCmd(w, cmd)
     if (GrGetCursorPosPtr == NULL)
 	return;
 
-    GrGetCursorPos(w, &p_in);
-    WindPointToSurface(w, &p_in, &p_out, (Rect *)NULL);
+    if (resulttype == -2)
+	GrGetCursorRootPos(w, &p_in);
+    else
+	GrGetCursorPos(w, &p_in);
 
-    /* Snap the cursor position if snap is in effect */
-    if (DBWSnapToGrid != DBW_SNAP_INTERNAL)
-	ToolSnapToGrid(w, &p_out, (Rect *)NULL);
+    if (resulttype >= 0)
+    {
+	WindPointToSurface(w, &p_in, &p_out, (Rect *)NULL);
+
+	/* Snap the cursor position if snap is in effect */
+	if (DBWSnapToGrid != DBW_SNAP_INTERNAL)
+	    ToolSnapToGrid(w, &p_out, (Rect *)NULL);
+    }
 
     /* Transform the result to declared units with option "lambda" or "grid" */ 
     switch (resulttype) {
+	case -2:
+	case -1:
+	    cursx = (double)p_in.p_x;
+	    cursy = (double)p_in.p_y;
+	    break;
 	case DBW_SNAP_INTERNAL:
 	    cursx = (double)p_out.p_x;
 	    cursy = (double)p_out.p_y;

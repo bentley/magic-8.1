@@ -1219,6 +1219,7 @@ x11SetDisplay (dispType, outFileName, mouseFileName)
     GrWindowIdPtr = GrTkWindowId;
     GrWindowNamePtr = GrTkWindowName;
     GrGetCursorPosPtr = grtkGetCursorPos;
+    GrGetCursorRootPosPtr = grtkGetCursorRootPos;
 
     /* local indirections */
     grSetSPatternPtr = grtkSetSPattern;

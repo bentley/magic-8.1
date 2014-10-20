@@ -64,6 +64,8 @@ GrTkDrawGlyph (gl, p)
     }
     if(grDisplay.depth <= 8) {
       XSetPlaneMask(grXdpy, grGCGlyph, grPlanes[127]); }
+
+    XSetFillStyle(grXdpy, grGCGlyph, FillSolid);
     if ((!anyObscure) && (GEO_SURROUND(&grCurClip, &bBox)) ) {
 	int *pixelp, x, y;
 

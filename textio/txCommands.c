@@ -1126,13 +1126,14 @@ txGetFileCommand(f, queue)
  * ----------------------------------------------------------------------------
  */
 
-bool
-TxTclDispatch(clientData, argc, argv)
+int
+TxTclDispatch(clientData, argc, argv, quiet)
    ClientData clientData;
    int argc;
    char *argv[];
+   bool quiet;
 {
-    bool result;
+    int result;
     int n, asize;
     TxCommand *tclcmd;
     unsigned char lastdrc;
@@ -1175,7 +1176,7 @@ TxTclDispatch(clientData, argc, argv)
     lastdrc = DRCBackGround;
     if (DRCBackGround != DRC_SET_OFF) DRCBackGround = DRC_NOT_SET;
 
-    result = WindSendCommand((MagWindow *)clientData, tclcmd);
+    result = WindSendCommand((MagWindow *)clientData, tclcmd, quiet);
 
     TxFreeCommand(tclcmd);
     TxCommandNumber++;
@@ -1183,8 +1184,7 @@ TxTclDispatch(clientData, argc, argv)
     if (SigInterruptPending)
 	TxPrintf("[Interrupted]\n");
 
-    if (result != FALSE)
-	WindUpdate();
+    if (result == 0) WindUpdate();
 
     SigInterruptPending = FALSE;
     if (SigInterruptOnSigIO >= 0) SigInterruptOnSigIO = 0;
@@ -1203,7 +1203,7 @@ TxTclDispatch(clientData, argc, argv)
 	DRCBreak();
 
     /* Reinstate the idle call */
-    if (result != FALSE) Tcl_DoWhenIdle(DRCContinuous, (ClientData)NULL);
+    if (result == 0) Tcl_DoWhenIdle(DRCContinuous, (ClientData)NULL);
     return result;
 }
 #else  /* !MAGIC_WRAPPER */
@@ -1380,7 +1380,7 @@ TxDispatch(f)
 	      }
 	    else {
 #endif
-	      (void) WindSendCommand((MagWindow *) NULL, cmd);
+	      (void) WindSendCommand((MagWindow *) NULL, cmd, FALSE);
 	      TxFreeCommand(cmd);
 	      TxCommandNumber++;
 
@@ -1476,7 +1476,7 @@ TxLispDispatch (argc,argv,trace, inFile)
   }
   if (trace)
     TxPrintCommand (cmd);
-  ret = WindSendCommand((MagWindow *) NULL, cmd);
+  ret = WindSendCommand((MagWindow *) NULL, cmd, FALSE);
   /* restore the original values */
   cmd->tx_p = tx_p;
   cmd->tx_wid = wid;

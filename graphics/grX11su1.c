@@ -1034,6 +1034,7 @@ x11SetDisplay (dispType, outFileName, mouseFileName)
     GrUnderWindowPtr = GrX11Lower;
     GrUpdateIconPtr = GrX11IconUpdate; 
     GrGetCursorPosPtr = grx11GetCursorPos;
+    GrGetCursorRootPosPtr = grx11GetCursorRootPos;
 
     /* local indirections */
     grSetSPatternPtr = grx11SetSPattern;

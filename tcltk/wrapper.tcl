@@ -9,7 +9,7 @@
 # revision C: Adds a layer manager toolbar on the left side
 # revision D: Adds a menubar on top with cell and tech manager tools
 
-global windowsopen
+global lwindow
 global tk_version
 global Glyph
 global Opts
@@ -169,6 +169,7 @@ proc magic::drcstate { status } {
    set winlist [*bypass windownames layout]
    foreach lwin $winlist {
       set framename [winfo parent $lwin]
+      if {$framename == "."} {return}
       switch $status {
          idle { 
 		set dct [*bypass drc list count total]
@@ -459,7 +460,8 @@ magic::tag cif      "magic::mgrupdate %W %1"
 magic::tag gds      "magic::mgrupdate %W %1"
 
 # This should be a list. . . do be done later
-set windowsopen 0
+set lwindow 0
+set owindow 0
 
 set Opts(techmgr) 0
 set Opts(target)  default
@@ -467,6 +469,7 @@ set Opts(netlist) 0
 set Opts(colormap) 0
 set Opts(wind3d) 0
 set Opts(crosshair) 0
+set Opts(toolbar) 0
 set Opts(drc) 1
 
 # Update cell and tech managers in response to a cif or gds read command
@@ -535,7 +538,8 @@ proc magic::boxview {win {cmdstr ""}} {
       }
 
       set framename [winfo parent $win]
-      set cr [cif scale out]
+      if {$framename == "."} {return}
+      if {[catch {set cr [cif scale out]}]} {return}
       set bval [${win} box values]
       set bllx [expr {[lindex $bval 0] * $cr }]
       set blly [expr {[lindex $bval 1] * $cr }]
@@ -626,9 +630,33 @@ proc magic::toolupdate {win {yesno "yes"} {layerlist "none"}} {
    }
 }
 
+# Generate the toolbar images for a technology
+
+proc magic::maketoolimages {} {
+
+   # Generate a layer image for "space" that will be used when layers are
+   # invisible.
+
+   image create layer img_space -name none
+
+   set all_layers [concat {errors labels subcell} [magic::tech layer "*"]]
+
+   foreach layername $all_layers {
+      image create layer img_$layername -name $layername
+      image create layer pale_$layername -name $layername \
+		-disabled true -icon 23
+    }
+}
+
 # Generate the toolbar for the wrapper
 
 proc magic::maketoolbar { framename } {
+
+   global Opts
+   if {$Opts(toolbar) == 0} {
+      magic::maketoolimages
+      set Opts(toolbar) 1
+   }
 
    # Destroy any existing toolbar before starting
    set alltools [winfo children ${framename}.toolbar]
@@ -646,16 +674,10 @@ proc magic::maketoolbar { framename } {
    set winheight [expr {[winfo height ${framename}] - \
 		[winfo height ${framename}.titlebar]}]
 
-   # Generate a layer image for "space" that will be used when layers are
-   # invisible.
-
-   image create layer img_space -name none
-
    # Generate layer images and buttons for toolbar
 
    set all_layers [concat {errors labels subcell} [magic::tech layer "*"]]
    foreach layername $all_layers {
-      image create layer img_$layername -name $layername
       button ${framename}.toolbar.b$layername -image img_$layername -command \
 		"$win see $layername"
 
@@ -693,8 +715,6 @@ proc magic::maketoolbar { framename } {
    # and the button bindings (see, see no)
 
    foreach layername $all_layers {
-      image create layer pale_$layername -name $layername -disabled true \
-		-icon 23
       button ${framename}.toolbar.p$layername -image pale_$layername -command \
 		"$win see $layername"
       bind ${framename}.toolbar.p$layername <ButtonPress-3> \
@@ -746,6 +766,7 @@ proc magic::maketoolbar { framename } {
 # command.
 
 proc magic::techrebuild {winpath {cmdstr ""}} {
+   global Opts
 
    # For NULL window, find all layout windows and apply update to each.
    if {$winpath == {}} {
@@ -758,6 +779,7 @@ proc magic::techrebuild {winpath {cmdstr ""}} {
 
    set framename [winfo parent $winpath]
    if {${cmdstr} == "load"} {
+      set Opts(toolbar) 0
       maketoolbar ${framename}
       magic::techmanager init
    }
@@ -772,10 +794,12 @@ proc magic::setscrollvalues {win} {
    set svalues [${win} view get]
    set bvalues [${win} view bbox]
 
+   set framename [winfo parent ${win}]
+   if {$framename == "."} {return}
+
    set bwidth [expr {[lindex $bvalues 2] - [lindex $bvalues 0]}]
    set bheight [expr {[lindex $bvalues 3] - [lindex $bvalues 1]}]
 
-   set framename [winfo parent ${win}]
    set wwidth [winfo width ${framename}.xscroll.bar]  ;# horizontal scrollbar
    set wheight [winfo height ${framename}.yscroll.bar]  ;# vertical scrollbar
 
@@ -930,7 +954,8 @@ proc magic::makescrollbar { fname orient win } {
 # Create the wrapper and open up a layout window in it.
 
 proc magic::openwrapper {{cell ""} {framename ""}} {
-   global windowsopen
+   global lwindow
+   global owindow
    global tk_version
    global Glyph
    global Opts
@@ -938,19 +963,24 @@ proc magic::openwrapper {{cell ""} {framename ""}} {
    
    # Disallow scrollbars and title caption on windows---we'll do these ourselves
 
-   if {$windowsopen == 0} {
+   if {$lwindow == 0} {
       windowcaption off
       windowscrollbars off
       windowborder off
    }
 
-   incr windowsopen 
    if {$framename == ""} {
-      set framename .layout${windowsopen}
+      incr lwindow 
+      set framename .layout${lwindow}
    }
    set winname ${framename}.magic
    
    toplevel $framename
+
+   # Resize the window
+   if {[catch {wm geometry ${framename} $Winopts(${framename},geometry)}]} {
+      catch {wm geometry ${framename} $Opts(geometry)}
+   }
    tkwait visibility $framename
 
    frame ${framename}.xscroll -height 13
@@ -1061,11 +1091,6 @@ proc magic::openwrapper {{cell ""} {framename ""}} {
    bind ${winname} <Motion> "*bypass setpoint %x %y ${winname}; \
 	magic::cursorview ${winname}"
 
-   # Resize the window
-   if {[catch {wm geometry ${framename} $Winopts(${framename},geometry)}]} {
-      catch {wm geometry ${framename} $Opts(geometry)}
-   }
-
    set Winopts(${framename},toolbar) 1
    set Winopts(${framename},cmdentry) 0
 
@@ -1073,16 +1098,11 @@ proc magic::openwrapper {{cell ""} {framename ""}} {
 # File
 # #################################
    set m [menu ${framename}.titlebar.mbuttons.file.toolmenu -tearoff 0]
-   $m add command -label "New" -command "magic::openwrapper"
-   # $m add command -label "New" -command "magic::openwrapper \
-		# [${winname} cellname list window]"
    $m add command -label "Open...   "        -command {magic::promptload magic}
    $m add command -label "Save      "        -command {magic::save }
    # $m add command -label "Save      "        -command {magic::promptsave magic}
    $m add command -label "Save as..."        -command {echo "not implemented"}
    $m add command -label "Save selection..." -command {echo "not implemented"}
-   $m add separator
-   $m add command -label "Close"             -command "magic::closewrapper ${framename}"
    $m add separator
    $m add command -label "Flush changes "    -command {magic::flush}
    $m add command -label "Delete "           -command {magic::cellname delete [magic::cellname list window]}
@@ -1157,6 +1177,11 @@ proc magic::openwrapper {{cell ""} {framename ""}} {
 # Window
 # #################################
    set m [menu ${framename}.titlebar.mbuttons.win.toolmenu -tearoff 0]
+   $m add command -label "New" -command "magic::openwrapper"
+   # $m add command -label "New" -command "magic::openwrapper \
+		# [${winname} cellname list window]"
+   $m add command -label "Close"             -command "magic::closewrapper ${framename}"
+   $m add separator
    $m add command -label "Full          (f)" -command {magic::view }
    $m add command -label "Redraw           " -command {}
    $m add command -label "Zoom Out      (Z)" -command {magic::zoom 2}
@@ -1292,15 +1317,22 @@ proc magic::openwrapper {{cell ""} {framename ""}} {
    # windows or (worse) blow away the window inside the GUI frame
 
    if {[magic::macro list o] == "openwindow"} {
-      magic::macro o "openwrapper"
+      magic::macro o \
+	   "incr owindow ;\
+	   set rpt \[cursor screen\] ;\
+	   set rptx \[lindex \$rpt 0\] ;\
+	   set rpty \[lindex \$rpt 1\] ;\
+	   set Winopts(.owindow\$owindow,geometry) 400x400+\$rptx+\$rpty ;\
+	   openwrapper \[\$Opts(focus).magic cellname list window\] \
+	   .owindow\$owindow"
    }
    if {[magic::macro list O] == "closewindow"} {
-      magic::macro O {closewrapper $Opts(focus)}
+      magic::macro O "closewrapper \$Opts(focus)"
    }
 
    # Make sure that closing from the window manager is equivalent to
    # the command "closewrapper"
-   wm protocol ${framename} WM_DELETE_WINDOW "closewrapper $framename"
+   wm protocol ${framename} WM_DELETE_WINDOW "closewrapper ${framename}"
 
    # If the variable $Opts(callback) is defined, then attempt to execute it.
    catch {eval $Opts(callback)}

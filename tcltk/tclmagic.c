@@ -300,7 +300,7 @@ static int
 _tcl_dispatch(ClientData clientData,
         Tcl_Interp *interp, int argc, char *argv[])
 {
-    bool wval; 
+    int wval; 
     int result, idx;
     Tcl_Obj *objv0;
     char *argv0, *tkwind;
@@ -383,7 +383,7 @@ _tcl_dispatch(ClientData clientData,
     if (TxInputRedirect == TX_INPUT_REDIRECTED)
 	TxInputRedirect = TX_INPUT_PENDING_RESET;
 
-    wval = TxTclDispatch(clientData, argc, argv);
+    wval = TxTclDispatch(clientData, argc, argv, TRUE);
 
     if (TxInputRedirect == TX_INPUT_PENDING_RESET)
 	TxInputRedirect = TX_INPUT_NORMAL;
@@ -410,7 +410,8 @@ _tcl_dispatch(ClientData clientData,
 	tkwind = NULL;
 
     // Pass back an error if TxTclDispatch failed
-    if (wval == FALSE) return TCL_ERROR;
+    if (wval != 0) return TCL_ERROR;
+
     return TagCallback(interp, tkwind, argc, argv);
 }
 
@@ -456,7 +457,7 @@ _tk_dispatch(ClientData clientData,
 	argv++;
     }
 
-    TxTclDispatch(clientData, argc, argv);
+    TxTclDispatch(clientData, argc, argv, FALSE);
 
     /* Get pathname of window and pass to TagCallback */
     return TagCallback(interp, arg0, argc, argv);

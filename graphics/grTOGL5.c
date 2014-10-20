@@ -72,32 +72,38 @@ GrTOGLDrawGlyph (gl, p)
 	}
     }
     if ((!anyObscure) && (GEO_SURROUND(&grCurClip, &bBox)) ) {
-	int *pixelp, x, y;
+	int *pixelp, x, y, thisp, lastp;
+	int color, red, green, blue, mask;
 
 	/* no clipping, try to go quickly */
 	pixelp = gl->gr_pixels;
+	thisp = -1;
 	for (y = 0; y < gl->gr_ysize; y++) {
 	    int x1, y1;
 
 	    y1 = bBox.r_ybot + y;
 	    for (x = 0; x < gl->gr_xsize; x++) {
-		int color, red, green, blue, mask;
-		if (*pixelp != 0)
+		lastp = thisp;
+		thisp = *pixelp++;		
+		if (thisp != 0)
 		{
 		    /* Note: mask has traditionally been 0-127 */
-		    mask = GrStyleTable[*pixelp].mask << 1;
-		    color = GrStyleTable[*pixelp].color;
+		    if (thisp != lastp) {
+			if (lastp != -1) glEnd();
+			
+			mask = GrStyleTable[thisp].mask << 1;
+			color = GrStyleTable[thisp].color;
+			GrGetColor(color, &red, &green, &blue);
+			glColor4ub((GLubyte)red, (GLubyte)green, (GLubyte)blue,
+					(GLubyte)mask);
+			glBegin(GL_POINTS);
+		    }
 		    x1 = bBox.r_xbot + x;
-		    GrGetColor(color, &red, &green, &blue);
-		    glColor4ub((GLubyte)red, (GLubyte)green, (GLubyte)blue,
-				(GLubyte)mask);
-		    glBegin(GL_POINTS);
 		    glVertex2i((GLint)x1, (GLint)y1);
-		    glEnd();
 		}
-		pixelp++;
 	    }
 	}
+	if (lastp != -1) glEnd();
     } else {
 	/* do pixel by pixel clipping */
 	int y, yloc;

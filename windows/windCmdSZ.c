@@ -1027,7 +1027,7 @@ windSendCmd(w, cmd)
     }
     newcmd.tx_wid = WIND_UNKNOWN_WINDOW;
     if (toWindow != NULL) newcmd.tx_wid = toWindow->w_wid;
-    (void) WindSendCommand(toWindow, &newcmd);
+    (void) WindSendCommand(toWindow, &newcmd, FALSE);
     return;
 
     usage:

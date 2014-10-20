@@ -935,6 +935,7 @@ oglSetDisplay (dispType, outFileName, mouseFileName)
     GrWindowIdPtr = GrTOGLWindowId;
     GrWindowNamePtr = GrTkWindowName;		/* from grTkCommon.c */
     GrGetCursorPosPtr = grtoglGetCursorPos;
+    GrGetCursorRootPosPtr = grtoglGetCursorRootPos;
 
     /* local indirections */
     grSetSPatternPtr = grtoglSetSPattern;
