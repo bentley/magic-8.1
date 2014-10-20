@@ -976,12 +976,12 @@ proc magic::openwrapper {{cell ""} {framename ""}} {
    set winname ${framename}.magic
    
    toplevel $framename
+   tkwait visibility $framename
 
    # Resize the window
    if {[catch {wm geometry ${framename} $Winopts(${framename},geometry)}]} {
       catch {wm geometry ${framename} $Opts(geometry)}
    }
-   tkwait visibility $framename
 
    frame ${framename}.xscroll -height 13
    frame ${framename}.yscroll -width 13
