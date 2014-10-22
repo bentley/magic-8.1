@@ -596,7 +596,8 @@ extArrayInterFunc(use, trans, x, y, ha)
      */
     oneDef = oneFlat->et_use->cu_def;
     oneFlat->et_nodes = extFindNodes(oneDef, &ha->ha_clipArea),
-    ExtLabelRegions(oneDef, ExtCurStyle->exts_nodeConn, &oneFlat->et_nodes);
+    ExtLabelRegions(oneDef, ExtCurStyle->exts_nodeConn, &oneFlat->et_nodes,
+		&ha->ha_clipArea);
     if ((ExtOptions & (EXT_DOADJUST|EXT_DOCOUPLING))
 		   == (EXT_DOADJUST|EXT_DOCOUPLING))
 	extFindCoupling(oneDef, &oneFlat->et_coupleHash, &ha->ha_clipArea);

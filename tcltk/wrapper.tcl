@@ -1322,9 +1322,10 @@ proc magic::openwrapper {{cell ""} {framename ""}} {
 	   set rpt \[cursor screen\] ;\
 	   set rptx \[lindex \$rpt 0\] ;\
 	   set rpty \[lindex \$rpt 1\] ;\
-	   set Winopts(.owindow\$owindow,geometry) 400x400+\$rptx+\$rpty ;\
+	   set Winopts(.owindow\$owindow,geometry) 500x500+\$rptx+\$rpty ;\
 	   openwrapper \[\$Opts(focus).magic cellname list window\] \
-	   .owindow\$owindow"
+	   .owindow\$owindow ;\
+	   .owindow\$owindow.magic view \[box values\]"
    }
    if {[magic::macro list O] == "closewindow"} {
       magic::macro O "closewrapper \$Opts(focus)"
