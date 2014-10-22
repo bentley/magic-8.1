@@ -201,18 +201,19 @@ WindSendCommand(w, cmd, quiet)
 	     * what might be wrong. And also print out the command!
 	     */
 	    if (quiet == FALSE)
-		TxError("Unknown command:");
-	    windPrintCommand(cmd);
-	    if (WindNewButtons != 0) 
 	    {
-		char *bname = "unknown";
-		if (WindNewButtons & TX_LEFT_BUTTON) bname = "left";
-		else if (WindNewButtons & TX_RIGHT_BUTTON) bname = "right";
-		else if (WindNewButtons & TX_MIDDLE_BUTTON) bname = "middle";
+		TxError("Unknown command:");
+		windPrintCommand(cmd);
+		if (WindNewButtons != 0) 
+		{
+		    char *bname = "unknown";
+		    if (WindNewButtons & TX_LEFT_BUTTON) bname = "left";
+		    else if (WindNewButtons & TX_RIGHT_BUTTON) bname = "right";
+		    else if (WindNewButtons & TX_MIDDLE_BUTTON) bname = "middle";
 		 
-		if (quiet == FALSE)
 		    TxError( "'%s' window is waiting for %s button to be released.\n",
 		    		rc->w_clientName, bname);
+		}
 		return -3;
 	    }
 	    else if (windGrabber != (WindClient) NULL)
