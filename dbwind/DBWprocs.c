@@ -46,7 +46,7 @@ static char rcsid[] __attribute__ ((unused)) = "$Header: /usr/cvsroot/magic-8.0/
 
 global WindClient DBWclientID;
 static int dbwBitMask = 0;
-#define MAX_BITMASK MAXINT
+#define MAX_BITMASK INT_MAX
 #define MAX_BITS_IN_MASK (sizeof(unsigned int) * 8 - 1)
 
 extern void DBWredisplay();		/* Defined in DBWdisplay.c */
