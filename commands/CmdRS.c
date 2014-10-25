@@ -1371,7 +1371,7 @@ Okay:
 		}
 		else
 		{
-		    printPath = index(path, '/');
+		    printPath = strchr(path, '/');
 		    if (printPath == NULL)
 			printPath = path;
 		    else printPath++;

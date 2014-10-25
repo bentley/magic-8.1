@@ -69,7 +69,7 @@ DBTechNameType(typename)
     int plane;
     LayerInfo *lp;
 
-    slash = index(typename, '/');
+    slash = strchr(typename, '/');
     if (slash != NULL) *slash = 0;
     type = (TileType)(spointertype) dbTechNameLookup(typename, &dbTypeNameLists);
     if (type < 0)
@@ -127,7 +127,7 @@ DBTechNameTypeExact(typename)
     char *slash;
     ClientData result;
 
-    slash = index(typename, '/');
+    slash = strchr(typename, '/');
     if (slash != NULL) return (TileType)(-1);
 
     result = dbTechNameLookupExact(typename, &dbTypeNameLists);
@@ -158,7 +158,7 @@ DBTechNameTypes(typename, bitmask)
     LayerInfo *lp;
 
     TTMaskZero(bitmask);
-    slash = index(typename, '/');
+    slash = strchr(typename, '/');
     if (slash != NULL) *slash = 0;
     type = (TileType)(spointertype) dbTechNameLookup(typename, &dbTypeNameLists);
     if (type < 0)

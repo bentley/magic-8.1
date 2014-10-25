@@ -1736,7 +1736,7 @@ GrTkIconUpdate(w, text)		/* See Blt code */
     class.res_class = "magic";
 
     XSetClassHint( grXdpy, wind, &class);
-    if (brack = index(text,'['))
+    if (brack = strchr(text,'['))
     {
      	brack--;
 	*brack = 0;
@@ -1745,7 +1745,7 @@ GrTkIconUpdate(w, text)		/* See Blt code */
      	*brack = ' ';
 	return;
     }
-    if (brack = rindex(text,' ')) text = brack+1;
+    if (brack = strrchr(text,' ')) text = brack+1;
     XSetIconName(grXdpy,wind,text);
     XStoreName(grXdpy,wind,text);
 }

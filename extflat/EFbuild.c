@@ -1040,7 +1040,7 @@ efBuildUse(def, subDefName, subUseId, ta, tb, tc, td, te, tf)
     def->def_uses = newuse;
 
     /* Set the use identifier and array information */
-    if ((cp = index(subUseId, '[')) == NULL)
+    if ((cp = strchr(subUseId, '[')) == NULL)
     {
 	newuse->use_id = StrDup((char **) NULL, subUseId);
 	newuse->use_xlo = newuse->use_xhi = 0;
@@ -1278,7 +1278,7 @@ efConnBuildName(cnp, name)
     cp = name;
     /* Make sure it's an array subscript range before treating it specially */
 again:
-    if ((cp = index(cp, '[')) == NULL)
+    if ((cp = strchr(cp, '[')) == NULL)
     {
 	cnp->cn_name = StrDup((char **) NULL, name);
 	return TRUE;
