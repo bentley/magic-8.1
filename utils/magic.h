@@ -21,14 +21,6 @@
 #ifndef _MAGIC_H
 #define	_MAGIC_H
 
-/*
- * Note:  System files, such as "stdio.h" and "sys/types.h", should be
- * included before this magic.h file.  This is done automatically below.
- */
-
-#include <stdio.h>
-#include <sys/types.h>
-
 #include <errno.h>
 #include <limits.h>
 
