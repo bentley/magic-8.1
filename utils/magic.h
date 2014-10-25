@@ -263,18 +263,6 @@ extern char AbortMessage[];
 # define	SIG_RETURNS_INT
 #endif
 
-/* 
- * Sprintf is a "char *" under BSD, and an "int" under System V. 
- */
-
-#ifndef  __STDC__
-#ifndef	SYSV
-#if !defined(ALPHA) && !defined(__APPLE__)
-    extern char* sprintf();
-#endif
-#endif
-#endif
-
 /*
  * Linux
  */
