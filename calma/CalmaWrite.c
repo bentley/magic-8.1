@@ -21,6 +21,7 @@ static char rcsid[] __attribute__ ((unused)) ="$Header: /usr/cvsroot/magic-8.0/c
 #endif  /* not lint */
 
 #include <stdio.h>
+#include <stdint.h>
 #include <string.h>
 #include <ctype.h>
 #include <sys/types.h>
@@ -2400,11 +2401,7 @@ calmaOutR8(d, f)
     int c, i, sign, expon;
 
     /* mantissa must be 64 bits for this routine to work correctly */
-#if SIZEOF_UNSIGNED_LONG == 8
-    unsigned long mantissa;
-#else
-    unsigned long long mantissa;
-#endif
+    uint64_t mantissa;
 
     mantissa = 0;
     if (d == 0.0)
