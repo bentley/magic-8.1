@@ -59,7 +59,7 @@ global unsigned char DRCStatus = DRC_NOT_RUNNING;
  * tiles pile up but nothing is checked.
  */
 
-global u_char DRCBackGround = DRC_NOT_SET;
+global unsigned char DRCBackGround = DRC_NOT_SET;
 
 /* Global variable, settable by outside world, that enables
  * and disables Euclidean DRC checking.  If enabled, magic

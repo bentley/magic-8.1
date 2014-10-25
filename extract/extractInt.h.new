@@ -247,7 +247,7 @@ typedef struct
     Tile	*b_inside;	/* Pointer to tile just inside segment */
     Tile	*b_outside;	/* Pointer to tile just outside segment */
     Rect	 b_segment;	/* Actual coordinates of segment */
-    u_char	 b_direction;	/* Direction following segment (see below) */
+    unsigned char b_direction;	/* Direction following segment (see below) */
     int		 b_plane;	/* extract argument for extSideOverlap   */
 } Boundary;
 
