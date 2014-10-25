@@ -23,16 +23,11 @@
 
 /*
  * Note:  System files, such as "stdio.h" and "sys/types.h", should be
- * included before this magic.h file.  This is done automatically below
- * based on the _STDIO_H and _SYS_TYPES_H standard definitions.
+ * included before this magic.h file.  This is done automatically below.
  */
 
-#ifndef _STDIO_H
 #include <stdio.h>
-#endif
-#ifndef _SYS_TYPES_H
 #include <sys/types.h>
-#endif
 
 #include <errno.h>
 #include <limits.h>
