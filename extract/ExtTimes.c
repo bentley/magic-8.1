@@ -724,7 +724,7 @@ extTimesFlatUse(use, cs)
     int nx, ny, nel;
 
     /* Compute statistics for this cell and its children */
-    bzero((char *) &dummyCS, sizeof dummyCS);
+    memset(&dummyCS, 0, sizeof dummyCS);
     (void) extTimesFlatFunc(use->cu_def, &dummyCS);
 
     /* Scale by number of elements in this array */

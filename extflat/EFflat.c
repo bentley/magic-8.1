@@ -449,7 +449,7 @@ efAddNodes(hc, stdcell)
 	newnode->efnode_client = (ClientData) NULL;
 	newnode->efnode_flags = node->efnode_flags;
 	newnode->efnode_type = node->efnode_type;
-	bcopy((char *) node->efnode_pa, (char *) newnode->efnode_pa,
+	memmove(newnode->efnode_pa, node->efnode_pa,
 		efNumResistClasses * sizeof (PerimArea));
 	GeoTransRect(&hc->hc_trans, &node->efnode_loc, &newnode->efnode_loc);
 

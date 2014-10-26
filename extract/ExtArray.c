@@ -668,7 +668,7 @@ extArrayAdjust(ha, et1, et2)
 		&& (nn = (NodeName *) HashGetValue(he)))
 	{
 	    nn->nn_node->node_cap = np->nreg_cap;
-	    bcopy((char *) np->nreg_pa, (char *) nn->nn_node->node_pa,
+	    memmove(nn->nn_node->node_pa, np->nreg_pa,
 		    ExtCurStyle->exts_numResistClasses * sizeof (PerimArea));
 	}
     }

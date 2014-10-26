@@ -226,7 +226,7 @@ LispGetPaint (name,s,f)
     TxPrintf ("Usage: (%s str)\n", name);
     RETURN;
   }
-  bzero (&scx, sizeof(SearchContext));
+  memset(&scx, 0, sizeof(SearchContext));
   window = ToolGetBoxWindow (&scx.scx_area, &windowMask);
   if (window == NULL) {
     TxPrintf ("%s: Box tool must be present.\n", name);
@@ -296,7 +296,7 @@ LispGetSelPaint (name,s,f)
     TxPrintf ("Usage: (%s str)\n", name);
     RETURN;
   }
-  bzero (&scx, sizeof(SearchContext));
+  memset(&scx, 0, sizeof(SearchContext));
   if (CmdParseLayers (LSTR(ARG1(s)), &mask)) {
     if (TTMaskEqual (&mask, &DBSpaceBits)) 
       CmdParseLayers ("*,label", &mask);
@@ -407,7 +407,7 @@ LispGetLabel (name,s,f)
     TxPrintf ("Usage: (%s str)\n", name);
     RETURN;
   }
-  bzero (&scx, sizeof(SearchContext));
+  memset(&scx, 0, sizeof(SearchContext));
   window = ToolGetBoxWindow (&scx.scx_area, &windowMask);
   if (window == NULL) {
     TxPrintf ("%s: Box tool must be present.\n", name);
@@ -469,7 +469,7 @@ LispGetSelLabel (name,s,f)
     TxPrintf ("Usage: (%s str)\n", name);
     RETURN;
   }
-  bzero (&scx, sizeof(SearchContext));
+  memset(&scx, 0, sizeof(SearchContext));
   CmdParseLayers ("*,label", &mask);
   TTMaskClearType(&mask,TT_SPACE);
   if (SelectUse)

@@ -420,7 +420,7 @@ DBWFeedbackAdd(area, text, cellDef, scaleFactor, style)
 	else dbwfbSize <<= 1;
 
 	new = (Feedback *) mallocMagic(dbwfbSize * sizeof(Feedback));
-	memcpy((char *)new, (char *)dbwfbArray, DBWFeedbackCount * sizeof(Feedback));
+	memcpy(new, dbwfbArray, DBWFeedbackCount * sizeof(Feedback));
 
 	for (i = DBWFeedbackCount; i < dbwfbSize; i++) new[i].fb_text = NULL;
 

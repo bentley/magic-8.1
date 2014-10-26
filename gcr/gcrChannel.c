@@ -77,31 +77,31 @@ GCRNewChannel(length, width)
     nBytes = lenWds * sizeof (GCRPin);
     ch->gcr_tPins = (GCRPin *) mallocMagic((unsigned) nBytes);
     ch->gcr_bPins = (GCRPin *) mallocMagic((unsigned) nBytes);
-    bzero((char *) ch->gcr_tPins, (int) nBytes);
-    bzero((char *) ch->gcr_bPins, (int) nBytes);
+    memset(ch->gcr_tPins, 0, nBytes);
+    memset(ch->gcr_bPins, 0, nBytes);
 
     nBytes = widWds * sizeof (GCRPin);
     ch->gcr_lPins = (GCRPin *) mallocMagic((unsigned) nBytes);
     ch->gcr_rPins = (GCRPin *) mallocMagic((unsigned) nBytes);
-    bzero((char *) ch->gcr_lPins, (int) nBytes);
-    bzero((char *) ch->gcr_rPins, (int) nBytes);
+    memset(ch->gcr_lPins, 0, nBytes);
+    memset(ch->gcr_rPins, 0, nBytes);
 
     ch->gcr_lCol = (GCRColEl *) mallocMagic((unsigned) (widWds * sizeof (GCRColEl)));
     ch->gcr_density = (int *) mallocMagic((unsigned) (lenWds * sizeof (int)));
 
     /* Global router-specific initialization */
     ch->gcr_dRowsByCol = (short *) mallocMagic((unsigned) (lenWds * sizeof (short)));
-    bzero((char *) ch->gcr_dRowsByCol, (int) lenWds * sizeof (short));
+    memset(ch->gcr_dRowsByCol, 0, lenWds * sizeof (short));
     ch->gcr_dColsByRow = (short *) mallocMagic ((unsigned) (widWds * sizeof (short)));
-    bzero((char *) ch->gcr_dColsByRow, (int) widWds * sizeof (short));
+    memset(ch->gcr_dColsByRow, 0, widWds * sizeof (short));
     ch->gcr_dMaxByRow = ch->gcr_dMaxByCol = 0;
 
 #ifdef	IDENSITY
 	/* For debugging */
     ch->gcr_iRowsByCol = (short *) mallocMagic((unsigned) (lenWds * sizeof (short)));
-    bzero((char *) ch->gcr_iRowsByCol, (int) lenWds * sizeof (short));
+    memset(ch->gcr_iRowsByCol, 0, lenWds * sizeof (short));
     ch->gcr_iColsByRow = (short *) mallocMagic((unsigned) (widWds * sizeof (short)));
-    bzero((char *) ch->gcr_iColsByRow, (int) widWds * sizeof (short));
+    memset(ch->gcr_iColsByRow, 0, widWds * sizeof (short));
 #endif	/* IDENSITY */
 
     ch->gcr_client = (ClientData) NULL;
@@ -117,7 +117,7 @@ GCRNewChannel(length, width)
     for (i = 0; i < lenWds; i++)
     {
 	ch->gcr_result[i] = (short *) mallocMagic((unsigned) nBytes);
-	bzero((char *) ch->gcr_result[i], (int) nBytes);
+	memset(ch->gcr_result[i], 0, nBytes);
 
 	/* BOTTOM */
 	ch->gcr_bPins[i].gcr_pDist = -1;
@@ -281,10 +281,10 @@ GCRFlipLeftRight(src, dst)
 	/* Copy the horizontal and vertical density information */
     dst->gcr_dMaxByCol = src->gcr_dMaxByCol;
     dst->gcr_dMaxByRow = src->gcr_dMaxByRow;
-    bcopy((char *) src->gcr_dColsByRow, (char *) dst->gcr_dColsByRow,
+    memmove(dst->gcr_dColsByRow, src->gcr_dColsByRow,
 		sizeof (short) * widWds);
 #ifdef	IDENSITY
-    bcopy((char *) src->gcr_iColsByRow, (char *) dst->gcr_iColsByRow,
+    memmove(dst->gcr_iColsByRow, src->gcr_iColsByRow,
 		sizeof (short) * widWds);
 #endif	/* IDENSITY */
     for (i = 0; i <= lenWds; i++)
@@ -394,14 +394,14 @@ GCRFlipXY(src, dst)
 	/* Copy the horizontal and vertical density information */
     dst->gcr_dMaxByRow = src->gcr_dMaxByCol;
     dst->gcr_dMaxByCol = src->gcr_dMaxByRow;
-    bcopy((char *) src->gcr_dRowsByCol, (char *) dst->gcr_dColsByRow,
+    memmove(dst->gcr_dColsByRow, src->gcr_dRowsByCol,
 		sizeof (short) * lenWds);
-    bcopy((char *) src->gcr_dColsByRow, (char *) dst->gcr_dRowsByCol,
+    memmove(dst->gcr_dRowsByCol, src->gcr_dColsByRow,
 		sizeof (short) * widWds);
 #ifdef	IDENSITY
-    bcopy((char *) src->gcr_iRowsByCol, (char *) dst->gcr_iColsByRow,
+    memmove(dst->gcr_iColsByRow, src->gcr_iRowsByCol,
 		sizeof (short) * lenWds);
-    bcopy((char *) src->gcr_iColsByRow, (char *) dst->gcr_iRowsByCol,
+    memmove(dst->gcr_iRowsByCol, src->gcr_iColsByRow,
 		sizeof (short) * widWds);
 #endif	/* IDENSITY */
     
@@ -459,30 +459,30 @@ GCRNoFlip(src, dst)
 
 	/* Copy pairs of pins in the top and bottom arrays */
     pinBytes = lenWds * sizeof (GCRPin);
-    bcopy((char *) src->gcr_tPins, (char *) dst->gcr_tPins, pinBytes);
-    bcopy((char *) src->gcr_bPins, (char *) dst->gcr_bPins, pinBytes);
+    memmove(dst->gcr_tPins, src->gcr_tPins, pinBytes);
+    memmove(dst->gcr_bPins, src->gcr_bPins, pinBytes);
 
 	/* Copy flag values from the result array */
     resBytes = widWds * sizeof (short);
     for (i = 0; i <= lenWds; i++)
-	bcopy((char *)src->gcr_result[i], (char *)dst->gcr_result[i], resBytes);
+	memmove(dst->gcr_result[i], src->gcr_result[i], resBytes);
 
 	/* Copy the left and right end pins */
     pinBytes = widWds * sizeof (GCRPin);
-    bcopy((char *) src->gcr_lPins, (char *) dst->gcr_lPins, pinBytes);
-    bcopy((char *) src->gcr_rPins, (char *) dst->gcr_rPins, pinBytes);
+    memmove(dst->gcr_lPins, src->gcr_lPins, pinBytes);
+    memmove(dst->gcr_rPins, src->gcr_rPins, pinBytes);
 
 	/* Copy the horizontal and vertical density information */
     dst->gcr_dMaxByCol = src->gcr_dMaxByCol;
     dst->gcr_dMaxByRow = src->gcr_dMaxByRow;
-    bcopy((char *) src->gcr_dRowsByCol, (char *) dst->gcr_dRowsByCol,
+    memmove(dst->gcr_dRowsByCol, src->gcr_dRowsByCol,
 		sizeof (short) * lenWds);
-    bcopy((char *) src->gcr_dColsByRow, (char *) dst->gcr_dColsByRow,
+    memmove(dst->gcr_dColsByRow, src->gcr_dColsByRow,
 		sizeof (short) * widWds);
 #ifdef	IDENSITY
-    bcopy((char *) src->gcr_iRowsByCol, (char *) dst->gcr_iRowsByCol,
+    memmove(dst->gcr_iRowsByCol, src->gcr_iRowsByCol, 
 		sizeof (short) * lenWds);
-    bcopy((char *) src->gcr_iColsByRow, (char *) dst->gcr_iColsByRow,
+    memmove(dst->gcr_iColsByRow, src->gcr_iColsByRow,
 		sizeof (short) * widWds);
 #endif	/* IDENSITY */
 

@@ -134,19 +134,6 @@ extern char AbortMessage[];
 
     /* ------- Configuration:  Handle Missing Routines/Definitions ------- */
 
-/* System V is missing some BSDisms. */
-#ifdef SYSV
-# ifndef bcopy
-#  define bcopy(a, b, c)	memcpy(b, a, c)
-# endif
-# ifndef bzero
-#  define bzero(a, b)		memset(a, 0, b)
-# endif
-# ifndef bcmp
-#  define bcmp(a, b, c)		memcmp(b, a, c)
-# endif
-#endif
-
 /* Some machines expect signal handlers to return an "int".  But most machines
  * expect them to return a "void".  If your machine expects an "int", put in
  * an "ifdef" below.

@@ -111,14 +111,13 @@ DBTechInitCompose()
 	*dtype++ = (PaintResultType)ps; 
     for (ps = 1; ps < PL_MAXTYPES * TT_MAXTYPES; ps++)
     {
-	memcpy((void *)dtype, (void *)stype, (size_t)TT_MAXTYPES
-		* sizeof(PaintResultType));
+	memcpy(dtype, stype, TT_MAXTYPES * sizeof(PaintResultType));
 	dtype += TT_MAXTYPES;
     }
 
     /* Fast copy the entire erase table to the paint table memory */
     dtype = &(DBPaintResultTbl[0][0][0]);
-    memcpy((void *)dtype, (void *)stype, (size_t)(TT_MAXTYPES
+    memcpy(dtype, stype, (TT_MAXTYPES
 		* TT_MAXTYPES * PL_MAXTYPES * sizeof(PaintResultType)));
 
     /* The following code is dreadfully slow, but I'm leaving it */
@@ -155,7 +154,7 @@ DBTechInitCompose()
     dtype = &(DBWriteResultTbl[0][0]);
     for (q = 0; q < TT_MAXTYPES; q++)
     {
-	memset((void *)dtype, (int)q, (size_t)TT_MAXTYPES);
+	memset(dtype, q, TT_MAXTYPES);
 	dtype += TT_MAXTYPES;
     }
 

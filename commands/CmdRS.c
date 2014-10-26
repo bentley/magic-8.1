@@ -501,7 +501,7 @@ cmdSelectArea(layers, less)
     DBWclientRec *crec;
     MagWindow *window;
 
-    bzero(&scx, sizeof(SearchContext));
+    memset(&scx, 0, sizeof(SearchContext));
     window = ToolGetBoxWindow(&scx.scx_area, &windowMask);
     if (window == NULL)
     {
@@ -578,7 +578,7 @@ cmdSelectVisible(layers, less)
     DBWclientRec *crec;
     MagWindow *window;
 
-    bzero(&scx, sizeof(SearchContext));
+    memset(&scx, 0, sizeof(SearchContext));
     window = ToolGetBoxWindow(&scx.scx_area, &windowMask);
     if (window == NULL)
     {
@@ -777,7 +777,7 @@ CmdSelect(w, cmd)
 
 #define MARGIN 2
 
-    bzero(&scx, sizeof(SearchContext));
+    memset(&scx, 0, sizeof(SearchContext));
     windCheckOnlyWindow(&w, DBWclientID);
     if ((w == (MagWindow *) NULL) || (w->w_client != DBWclientID))
     {
@@ -1326,7 +1326,7 @@ Okay:
 	    {
 		SearchContext scx2;
 
-		bzero(&scx2, sizeof(SearchContext));
+		memset(&scx2, 0, sizeof(SearchContext));
 		DBTreeFindUse(optionArgs[1], scx.scx_use, &scx2);
 		use = scx2.scx_use;
 		if (use == NULL)

@@ -161,7 +161,7 @@ nlTermFunc(name, firstInNet, netList)
     if (firstInNet)
     {
 	net = (NLNet *) mallocMagic((unsigned) (sizeof (NLNet)));
-	bzero( (char *) net, sizeof(*net));
+	memset(net, 0, sizeof(*net));
 	net->nnet_terms = (NLTerm *) NULL;
 	net->nnet_next = netList->nnl_nets;
 	net->nnet_area = GeoNullRect;

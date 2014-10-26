@@ -396,8 +396,7 @@ HeapAdd(heap, pKey, id)
 	/* Need to recopy to a larger area */
 	new = (HeapEntry *) mallocMagic((unsigned) ((2 * heap->he_size + 2)
 			* sizeof (HeapEntry)));
-	bcopy((char *) list, (char *) new,
-		(heap->he_size + 2) * sizeof (HeapEntry));
+	memmove(new, list, (heap->he_size + 2) * sizeof (HeapEntry));
 	freeMagic((char *) heap->he_list);
 	heap->he_list = list = new;
 	heap->he_size *= 2;

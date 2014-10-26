@@ -226,7 +226,7 @@ extHierConnectFunc1(oneTile, ha)
 		    n = sizeof(Label) + strlen(lab->lab_text)
 				- sizeof lab->lab_text + 1;
 		    newlab = (Label *)mallocMagic((unsigned)n);
-		    bcopy((char *)lab, (char *)newlab, (int)n);
+		    memmove(newlab, lab, n);
 		
 		    newlab->lab_next = ha->ha_parentUse->cu_def->cd_labels;
 		    ha->ha_parentUse->cu_def->cd_labels = newlab;

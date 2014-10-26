@@ -252,8 +252,7 @@ areaCheck(tile, arg)
 	else if ((arg->dCD_entries & ~(entries | 7)) == arg->dCD_entries)
 	{
 	    newrlist = (Rect *)mallocMagic((arg->dCD_entries << 1) * sizeof(Rect));
-	    memcpy((void *)newrlist, (void *)arg->dCD_rlist, (size_t)entries *
-			sizeof(Rect));
+	    memcpy(newrlist, arg->dCD_rlist, entries * sizeof(Rect));
 	    freeMagic(arg->dCD_rlist);
 	    arg->dCD_rlist = newrlist;
 	}

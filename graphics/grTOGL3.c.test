@@ -393,9 +393,7 @@ grtoglxScrollBackingStore(MagWindow *w, Point *shift)
     memmax = (width * height * 3) - ((tpos > bpos) ? tpos : bpos);
 
 
-    memmove((void *)(w->w_backingStore + tpos),
-		(void *)(w->w_backingStore + bpos),
-		memmax);
+    memmove(w->w_backingStore + tpos, w->w_backingStore + bpos, memmax);
 
 //  for (y = yorigin; y < yorigin + height; y++)
 //  {
@@ -403,8 +401,7 @@ grtoglxScrollBackingStore(MagWindow *w, Point *shift)
 // 	if ((bpos + srow) > (srow * height)) break;
 // 	if ((tpos + srow) > (srow * height)) break;
 
-// 	memmove((void *)(w->w_backingStore + tpos),
-// 		(void *)(w->w_backingStore + bpos), width * 3);
+// 	memmove(w->w_backingStore + tpos, w->w_backingStore + bpos, width * 3);
 
 // 	if (y >= height) break;
 // 	bpos += srow;

@@ -815,8 +815,7 @@ dbcConnectFunc(tile, cx)
 	csa2->csa2_size *= 2;
 
 	newlist = (conSrArea *)mallocMagic(csa2->csa2_size * sizeof(conSrArea));
-	memcpy((void *)newlist, (void *)csa2->csa2_list,
-			(size_t)lastsize * sizeof(conSrArea));
+	memcpy(newlist, csa2->csa2_list, lastsize * sizeof(conSrArea));
 	// for (i = 0; i < lastsize; i++)
 	// {
 	//     newlist[i].area = csa2->csa2_list[i].area;

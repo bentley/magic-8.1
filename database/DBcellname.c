@@ -994,7 +994,7 @@ DBUsePrint(CellName, who, dolist)
 	    {
 		SearchContext scx;
 
-		bzero(&scx, sizeof(SearchContext));
+		memset(&scx, 0, sizeof(SearchContext));
 		found = 0;
 
 		HashStartSearch(&hs);
@@ -1138,7 +1138,7 @@ DBLockUse(UseName, bval)
     {
 	SearchContext scx;
 
-	bzero(&scx, sizeof(SearchContext));
+	memset(&scx, 0, sizeof(SearchContext));
 	found = 0;
 
 	HashStartSearch(&hs);

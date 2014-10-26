@@ -297,7 +297,7 @@ plowFileDiff(file1, file2)
     while ((n1 = read(f1, b1, BUFSIZ)) > 0)
     {
 	n2 = read(f2, b2, BUFSIZ);
-	if (n1 != n2 || bcmp(b1, b2, n1) != 0)
+	if (n1 != n2 || memcmp(b1, b2, n1) != 0)
 	    goto done;
     }
     ret = TRUE;

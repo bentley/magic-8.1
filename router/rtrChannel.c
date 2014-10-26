@@ -537,9 +537,9 @@ RtrChannelDensity(ch)
     }
 
 #ifdef	IDENSITY
-    bcopy((char *) ch->gcr_dColsByRow, (char *) ch->gcr_iColsByRow,
+    memmove(ch->gcr_iColsByRow, ch->gcr_dColsByRow,
 		(ch->gcr_width + 2) * sizeof (short));
-    bcopy((char *) ch->gcr_dRowsByCol, (char *) ch->gcr_iRowsByCol,
+    memmove(ch->gcr_iRowsByCol, ch->gcr_dRowsByCol,
 		(ch->gcr_length + 2) * sizeof (short));
 #endif	/* IDENSITY */
 

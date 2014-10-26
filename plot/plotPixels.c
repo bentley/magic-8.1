@@ -1159,8 +1159,7 @@ Rect *area;				/* Area to be cleared, in PixRaster
 
     if (area == NULL)
     {
-	bzero((char *) pr->pix_pixels,
-		pr->pix_height*pr->pix_width);
+	memset(pr->pix_pixels, 0, pr->pix_height*pr->pix_width);
 	return;
     }
 

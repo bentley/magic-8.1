@@ -155,7 +155,7 @@ callocMagic(nbytes)
     void *cp;
 
     cp = mallocMagic(nbytes);
-    bzero(cp, (int) nbytes);
+    memset(cp, 0, nbytes);
 
     return (cp);
 }

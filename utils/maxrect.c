@@ -169,16 +169,14 @@ FindMaxRects(tile, mrd)
 	    mrd->listdepth <<= 1;	/* double the list size */
 
 	    newrlist = (Rect *)mallocMagic(mrd->listdepth * sizeof(Rect));
-	    memcpy((void *)newrlist, (void *)mrd->rlist,
-				(size_t)mrd->entries * sizeof(Rect));
+	    memcpy(newrlist, mrd->rlist, mrd->entries * sizeof(Rect));
 	    // for (s = 0; s < entries; s++)
 	    //	   newrlist[s] = mrd->rlist[s];
 	    freeMagic(mrd->rlist);
 	    mrd->rlist = newrlist;
 
 	    newrlist = (Rect *)mallocMagic(mrd->listdepth * sizeof(Rect));
-	    memcpy((void *)newrlist, (void *)mrd->swap,
-				(size_t)entries * sizeof(Rect));
+	    memcpy(newrlist, mrd->swap, entries * sizeof(Rect));
 	    // for (s = 0; s < entries; s++)
 	    //     newrlist[s] = mrd->swap[s];
 	    freeMagic(mrd->swap);
