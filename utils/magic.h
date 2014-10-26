@@ -147,11 +147,6 @@ extern char AbortMessage[];
 # endif
 #endif
 
-/* Some machines need vfprintf().  (A temporary MIPS bug?) (see txOutput.c) */
-#if 	(defined(MIPSEB) && defined(SYSTYPE_BSD43)) || ibm032
-# define	NEED_VFPRINTF
-#endif
-
 /* Some machines expect signal handlers to return an "int".  But most machines
  * expect them to return a "void".  If your machine expects an "int", put in
  * an "ifdef" below.

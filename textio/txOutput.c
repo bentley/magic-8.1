@@ -458,35 +458,3 @@ TxStopMore()
 }
 
 #endif /* !MAGIC_WRAPPER */
-
-#ifdef	NEED_VFPRINTF
-
-int
-vfprintf(FILR *iop, char *fmt, va_list args_in)
-{
-    va_list ap;
-    int len;
-#if defined(MIPSEB) && defined(SYSTYPE_BSD43)
-    unsigned char localbuf[BUFSIZ];
-#else
-    char localbuf[BUFSIZ];
-#endif
-
-    va_copy(ap, args_in);
-    if (iop->_flag & _IONBF) {
-	iop->_flag &= ~_IONBF;
-	iop->_ptr = iop->_base = localbuf;
-	len = _doprnt(fmt, ap, iop);
-	(void) fflush(iop);
-	iop->_flag |= _IONBF;
-	iop->_base = NULL;
-	iop->_bufsiz = 0;
-	iop->_cnt = 0;
-    } else
-	len = _doprnt(fmt, ap, iop);
-
-    va_end(ap);
-    return (ferror(iop) ? EOF : len);
-}
-#endif  /* NEED_VFPRINTF */
-
