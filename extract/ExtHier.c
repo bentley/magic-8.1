@@ -209,29 +209,6 @@ extHierConnectFunc1(oneTile, ha)
 		    node1->node_names = node2->node_names;
 		    freeMagic((char *) node2);
 		}
-
-#if 0
-		/* Copy this label to the parent def with a	*/
-		/* special flag, so we can output it as a node	*/
-	 	/* and then delete it.  Don't duplicate labels	*/
-		/* that are already in the parent.		*/
-
-		for (newlab = ha->ha_parentUse->cu_def->cd_labels;
-				newlab; newlab = newlab->lab_next)
-		    if (!strcmp(newlab->lab_text, lab->lab_text))
-			break;
-
-		if (newlab == NULL)
-		{
-		    n = sizeof(Label) + strlen(lab->lab_text)
-				- sizeof lab->lab_text + 1;
-		    newlab = (Label *)mallocMagic((unsigned)n);
-		    memmove(newlab, lab, n);
-		
-		    newlab->lab_next = ha->ha_parentUse->cu_def->cd_labels;
-		    ha->ha_parentUse->cu_def->cd_labels = newlab;
-		}
-#endif
 	    }
 
     return (0);

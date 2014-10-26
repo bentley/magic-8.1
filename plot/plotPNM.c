@@ -808,17 +808,6 @@ PlotPNM(fileName, scx, layers, xMask, width)
     im_yoffset = im_y - 1;
 
     TxPrintf ("PNM image dimensions: %d x %d\n", im_x, im_y);
-#if 0
-    TxPrintf ("Region size: %d x %d\n", tile_xsize, tile_ysize);
-    TxPrintf ("Pixels per region: %d\n", y_pixels);
-    TxPrintf ("Scale: %g\n", scale);
-    TxPrintf ("Antialiasing overlap: %d\n", scale_over_2);
-    if (PlotPNMdownsample > 0)
-    {
-	TxPrintf ("Downsampling: %d\n", PlotPNMdownsample);
-	TxPrintf ("Downsampled region size: %d x %d\n", ds_xsize, ds_ysize);
-    }
-#endif
 
     strip = (float *) mallocMagic((unsigned) (ds_over_2 * 2 * 3 * sizeof(float)));
     lkstep = (int *) mallocMagic((unsigned) (ds_over_2 * 2 * sizeof(int)));

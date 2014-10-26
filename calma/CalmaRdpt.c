@@ -783,48 +783,6 @@ calmaElementText()
      * a flag for that in the "cifoutput" section of the techfile.
      */
 
-#if 0 
-
-    {
-	static bool algmsg = FALSE;
-	bool changed = FALSE;
-	char *cp;
-	char *savstring;
-	for (cp = textbody; *cp; cp++)
-	{
-	    if (*cp <= ' ' | *cp > '~') 
-	    {
-		if (!changed)
-		{
-		    savstring = StrDup(NULL, textbody);
-		    changed = TRUE;
-		}
-		if (*cp == '\r' && *(cp+1) == '\0')
-		    *cp = '\0';
-		else if (*cp == '\r') 
-		    *cp = '_';
-		else if (*cp == ' ')
-		    *cp = '_';
-		else
-		    *cp = '?';
-	    }
-	}
-	if (changed) {
-	    calmaReadError("Warning:  improper characters fixed in label '%s'\n",
-			savstring);
-	    if (!algmsg) {
-		algmsg = TRUE;
-		calmaReadError("    (algorithm used:  trailing <CR> dropped, "
-				"<CR> and ' ' changed to '_', \n"
-				"    other non-printables changed to '?')\n");
-	    }
-	    calmaReadError("	modified label is '%s'\n", textbody);
-	    freeMagic(savstring);
-	}
-    }
-
-#endif /* 0 */
-
     /* Place the label */
     if (strlen(textbody) == 0)
     {

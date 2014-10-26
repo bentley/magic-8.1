@@ -521,56 +521,6 @@ dbTechSaveCompose(ruleType, t, argc, argv)
 }
 
 
-#if 0	/* deprecated function (5/11/04) */
-/*
- * ----------------------------------------------------------------------------
- *
- * dbTechCheckImages --
- *
- * When processing a compose rule for 't' with RHS components
- * 'r' and 's', check to be sure that the images of 't' on
- * those planes present in 'r' but not in 's' are identical to
- * the images of 'r' on those planes.  This is necessary in order
- * that the result on these planes not depend on types present on
- * other planes.
- *
- * Results:
- *	Returns TRUE if successful, FALSE on error.
- *
- * Side effects:
- *	None.
- *
- * ----------------------------------------------------------------------------
- */
-
-bool
-dbTechCheckImages(t, r, s)
-    TileType t;			/* Type that is composed */
-    TileType r;	/* First constituent */
-    TileType s;			/* Second constituent */
-{
-    int pNum;
-    PlaneMask pMask;
-
-    if (pMask = (LayerPlaneMask(r) & ~LayerPlaneMask(s)))
-    {
-	for (pNum = PL_TECHDEPBASE; pNum < DBNumPlanes; pNum++)
-	    if (PlaneMaskHasPlane(pMask, pNum) && (t != r))
-	    {
-		TechError("Result image on plane %s must be the same "
-			"as image of %s on plane %s\n",
-			DBPlaneLongName(pNum),
-			DBTypeLongName(r),
-			DBPlaneLongName(pNum));
-		return FALSE;
-	    }
-    }
-
-    return TRUE;
-}
-#endif	/* 0 */
-
-
 /*
  * ----------------------------------------------------------------------------
  *
