@@ -186,21 +186,6 @@ extern char AbortMessage[];
 #define FD_ZERO(p)      (*(p) = 0)
 #endif
 
-/*
- * Handling of VA_COPY.  These variables are set by the configuration
- * script.  Some systems define va_copy, some define __va_copy, and
- * some don't define it at all.  It is assumed that systems which do
- * not define it at all allow arguments to be copied with "=".
- */
-
-#ifndef HAVE_VA_COPY
-  #ifdef HAVE___VA_COPY
-    #define va_copy(a, b) __va_copy(a, b)
-  #else
-    #define va_copy(a, b) a = b
-  #endif
-#endif
-
 /* ------------------ End of Machine Configuration Section ----------------- */
 
 #endif /* _MAGIC_H */
