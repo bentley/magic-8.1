@@ -152,14 +152,6 @@ extern char AbortMessage[];
 #endif
 
 /*
- * Irix 
- */
-#ifdef sgi
-#define vfork fork
-#endif
-
-
-/*
  * Select system call
  *
  * 	Note:  Errors here may be caused by not including <sys/types.h> 
