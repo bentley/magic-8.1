@@ -25,10 +25,6 @@ static char rcsid[] __attribute__ ((unused)) = "$Header: /usr/cvsroot/magic-8.0/
 #include <sys/types.h>
 #include <sys/time.h>
 #include <sys/resource.h>
-#ifdef SYSV
-#include <sys/param.h>
-#include <sys/times.h>
-#endif
 #include <math.h>		/* for sqrt() function */
 
 #include "utils/magic.h"
