@@ -23,7 +23,6 @@
 
 #include <errno.h>
 #include <limits.h>
-#include <stdint.h>
 
 /* ------------------- Universal pointer typecast --------------------- */
 
@@ -42,9 +41,9 @@ typedef signed long spointertype;
 ERROR: Cannot compile without knowing the size of a pointer.  See utils/magic.h
 #endif
 
-typedef int64_t dlong;
-#define DLONG_MAX INT64_MAX
-#define DLONG_MIN INT64_MIN
+typedef long long dlong;
+#define DLONG_MAX LLONG_MAX
+#define DLONG_MIN LLONG_MIN
 #define DLONG_PREFIX "ll"
 
 /* --------------------- Universal pointer type ----------------------- */
