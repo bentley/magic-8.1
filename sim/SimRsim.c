@@ -209,13 +209,7 @@ SimStartRsim(argv)
 
 
     FORK(child);
-/*
-#ifdef SYSV
-    child = fork();
-#else
-    child = vfork();
-#endif
-*/
+
     if (child == -1) {
 	close(magToRsimPipe[P_READ]);
 	close(magToRsimPipe[P_WRITE]);
