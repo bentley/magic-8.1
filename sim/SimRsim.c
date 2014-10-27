@@ -199,14 +199,12 @@ SimStartRsim(argv)
 	}
 	strcat(rsimfile, "/irsim");
     }
-#ifndef NO_ACCESS_CALL
+
     if( access( rsimfile, 1 ) != 0 )
     {
 	TxPrintf("can not execute '%s'\n", rsimfile );
 	return(FALSE);
     }
-#endif
-
 
     FORK(child);
 
