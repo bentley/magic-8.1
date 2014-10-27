@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef _LEF_H
-#define _LEF_H
+#ifndef LEF_H
+#define LEF_H
 
 #include "utils/magic.h"
 
@@ -21,4 +21,4 @@ extern void LefTechScale();
 
 extern void LefInit();
 
-#endif /* _LEF_H */
+#endif /* LEF_H */

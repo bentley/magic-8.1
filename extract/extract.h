@@ -19,8 +19,8 @@
  *
  */
 
-#ifndef _EXTRACT_H
-#define _EXTRACT_H
+#ifndef EXTRACT_H
+#define EXTRACT_H
 
 #include "utils/magic.h"
 
@@ -81,4 +81,4 @@ extern bool ExtCompareStyle();
 extern void ExtGetZAxis();
 #endif
 
-#endif /* _EXTRACT_H */
+#endif /* EXTRACT_H */

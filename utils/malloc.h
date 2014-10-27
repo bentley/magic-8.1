@@ -19,8 +19,8 @@
  *     *********************************************************************
  */
 
-#ifndef _MALLOC_H
-#define _MALLOC_H
+#ifndef MALLOC_H
+#define MALLOC_H
 
 extern void *mallocMagic(unsigned int);
 extern void *callocMagic(unsigned int);

@@ -18,8 +18,8 @@
  * rcsid $Header: /usr/cvsroot/magic-8.0/plow/plow.h,v 1.1.1.1 2008/02/03 20:43:50 tim Exp $
  */
 
-#ifndef _PLOW_H
-#define _PLOW_H
+#ifndef PLOW_H
+#define PLOW_H
 
 #include "utils/magic.h"
 
@@ -53,4 +53,4 @@ extern int PlowJogHorizon;
 /* TRUE if we should eliminate jogs after each plow operation */
 extern bool PlowDoStraighten;
 
-#endif /* _PLOW_H */
+#endif /* PLOW_H */

@@ -19,8 +19,8 @@
  * rcsid $Header: /usr/cvsroot/magic-8.0/wiring/wireInt.h,v 1.1.1.1 2008/02/03 20:43:50 tim Exp $
  */
 
-#ifndef _WIREINT_H
-#define _WIREINT_H
+#ifndef WIREINT_H
+#define WIREINT_H
 
 #include "utils/magic.h"
 #include "database/database.h"
@@ -36,4 +36,4 @@ extern int WireLastDir;
 extern void WireRememberForUndo();
 extern void WireUndoInit();
 
-#endif /* _WIREINT_H */
+#endif /* WIREINT_H */

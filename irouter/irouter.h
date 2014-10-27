@@ -21,8 +21,8 @@
  * rcsid $Header: /usr/cvsroot/magic-8.0/irouter/irouter.h,v 1.1.1.1 2008/02/03 20:43:50 tim Exp $
  */
 
-#ifndef _IROUTER_H
-#define _IROUTER_H
+#ifndef IROUTER_H
+#define IROUTER_H
 
 #include "utils/magic.h"
 
@@ -49,4 +49,4 @@ extern bool IRTechLine();
 extern void IRDRCInit();
 extern bool IRDRCLine();
 
-#endif /* _IROUTER_H */
+#endif /* IROUTER_H */

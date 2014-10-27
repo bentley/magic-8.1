@@ -19,8 +19,8 @@
  * rcsid $Header: /usr/cvsroot/magic-8.0/extflat/extflat.h,v 1.2 2008/12/03 14:12:09 tim Exp $
  */
 
-#ifndef _EXTFLAT_H
-#define _EXTFLAT_H
+#ifndef EXTFLAT_H
+#define EXTFLAT_H
 
 #include "utils/magic.h"
 
@@ -346,4 +346,4 @@ extern int EFReadFile(char *);
 
 */
 
-#endif /* _EXTFLAT_H */
+#endif /* EXTFLAT_H */

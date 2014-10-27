@@ -62,8 +62,8 @@
  */
 
 
-#ifndef _HEAP_H
-#define _HEAP_H
+#ifndef HEAP_H
+#define HEAP_H
 
 #include "utils/geometry.h"
 
@@ -140,4 +140,4 @@ extern void HeapDump(Heap *);
 
 #define HEAP_EMPTY(h)   ((h)->he_used == 0)
 
-#endif /* _HEAP_H */
+#endif /* HEAP_H */

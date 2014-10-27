@@ -19,8 +19,8 @@
  * sccsid "@(#)grouter.h	4.5 MAGIC (Berkeley) 10/31/85"
  */
 
-#ifndef _GROUTER_H
-#define _GROUTER_H
+#ifndef GROUTER_H
+#define GROUTER_H
 
 #include "router/router.h"
 #include "gcr/gcr.h"
@@ -264,4 +264,4 @@ extern bool glInitialized;	/* TRUE if registered with debug module */
 extern ClientData glDebugID;	/* Our identity with the debugging module */
 #include "grouteDebug.h"	/* Can add flags without total recompile */
 
-#endif /* _GROUTER_H */
+#endif /* GROUTER_H */

@@ -19,8 +19,8 @@
  * rcsid $Header: /usr/cvsroot/magic-8.0/cmwind/cmwind.h,v 1.2 2009/09/10 20:32:51 tim Exp $
  */
 
-#ifndef _CMWIND_H
-#define _CMWIND_H
+#ifndef CMWIND_H
+#define CMWIND_H
 
 #include "windows/windows.h"
 #include "textio/txcommands.h"
@@ -77,4 +77,4 @@ extern Rect cmwCurrentColorArea;
 extern void cmwUndoColor(int, int, int, int, int, int, int);
 extern bool CMWCheckWritten(void);
 
-#endif /* _CMWIND_H */
+#endif /* CMWIND_H */

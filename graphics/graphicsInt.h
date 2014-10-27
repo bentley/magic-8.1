@@ -19,8 +19,8 @@
  * rcsid "$Header: /usr/cvsroot/magic-8.0/graphics/graphicsInt.h,v 1.3 2010/06/24 12:37:18 tim Exp $"
  */
 
-#ifndef _GRAPHICSINT_H
-#define _GRAPHICSINT_H
+#ifndef GRAPHICSINT_H
+#define GRAPHICSINT_H
 
 #include "windows/windows.h"
 #include "utils/magic.h"
@@ -89,4 +89,4 @@ extern void grInformDriver();
      (((x) >> SUBPIXELBITS) < 4) || (((y) >> SUBPIXELBITS) < 4) \
 )
 
-#endif /* _GRAPHICSINT_H */
+#endif /* GRAPHICSINT_H */

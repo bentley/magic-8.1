@@ -18,8 +18,8 @@
  *
  */
 
-#ifndef	_MAGSGTTY_H
-#define _MAGSGTTY_H
+#ifndef	MAGSGTTY_H
+#define MAGSGTTY_H
 
 #if !defined(SYSV) && !defined(CYGWIN)
 # ifdef	ALPHA
@@ -31,4 +31,4 @@
 #include <termio.h>
 #endif
 
-#endif	/* _MAGSGTTY_H */
+#endif	/* MAGSGTTY_H */

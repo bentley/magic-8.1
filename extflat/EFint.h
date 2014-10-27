@@ -19,8 +19,8 @@
  * rcsid $Header: /usr/cvsroot/magic-8.0/extflat/EFint.h,v 1.6 2010/12/16 18:59:03 tim Exp $
  */
 
-#ifndef _EFINT_H
-#define _EFINT_H
+#ifndef EFINT_H
+#define EFINT_H
 
 #include "utils/magic.h"
 
@@ -185,14 +185,14 @@ typedef struct def
  * structure describes the indices and the separation between elements
  * (for computing transforms).
  */
-#ifndef _DATABASE_H
+#ifndef DATABASE_H
 typedef struct
 {
     int		 ar_xlo, ar_xhi;
     int		 ar_ylo, ar_yhi;
     int		 ar_xsep, ar_ysep;
 } ArrayInfo;
-#endif /* _DATABASE_H */
+#endif /* DATABASE_H */
 
 typedef struct use
 {
@@ -318,4 +318,4 @@ extern void efBuildResistor();
 extern void efBuildCap();
 extern HierContext *EFFlatBuildOneLevel();
 
-#endif /* _EFINT_H */
+#endif /* EFINT_H */

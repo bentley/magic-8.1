@@ -21,8 +21,8 @@
  * rcsid "$Header: /usr/cvsroot/magic-8.0/cif/CIFread.h,v 1.3 2010/08/25 17:33:55 tim Exp $
  */
 
-#ifndef _CIFREAD_H
-#define _CIFREAD_H
+#ifndef CIFREAD_H
+#define CIFREAD_H
 
 #include "cif/CIFint.h"
 
@@ -192,4 +192,4 @@ extern int cifParseLaChar;
 		? (cifParseLaAvail = FALSE, cifParseLaChar) \
 		: (cifParseLaChar = getc(cifInputFile)))
 
-#endif /* _CIFREAD_H */
+#endif /* CIFREAD_H */

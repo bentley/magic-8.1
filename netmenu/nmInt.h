@@ -20,8 +20,8 @@
  * rcsid "$Header: /usr/cvsroot/magic-8.0/netmenu/nmInt.h,v 1.1.1.1 2008/02/03 20:43:50 tim Exp $"
  */
 
-#ifndef _NMINT_H
-#define _NMINT_H
+#ifndef NMINT_H
+#define NMINT_H
 
 #include "windows/windows.h"
 
@@ -144,4 +144,4 @@ extern char * NMCurNetName;
 #define NMUE_SELECT 3
 #define NMUE_NETLIST 4
 
-#endif /* _NMINT_H */
+#endif /* NMINT_H */

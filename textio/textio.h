@@ -22,8 +22,8 @@
  * rcsid $Header: /usr/cvsroot/magic-8.0/textio/textio.h,v 1.2 2008/02/18 01:01:35 tim Exp $
  */
 
-#ifndef _TEXTIO_H
-#define _TEXTIO_H
+#ifndef TEXTIO_H
+#define TEXTIO_H
 
 #include "utils/magic.h"
 
@@ -105,4 +105,4 @@ void TxInitReadline();
 
 #define   TX_MAX_OPEN_FILES       20
 
-#endif /* _TEXTIO_H */
+#endif /* TEXTIO_H */

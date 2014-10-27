@@ -29,8 +29,8 @@
  * rcsid $Header: /usr/cvsroot/magic-8.0/garouter/gaInternal.h,v 1.1.1.1 2008/02/03 20:43:50 tim Exp $
  */
 
-#ifndef _GAINTERNAL_H
-#define _GAINTERNAL_H
+#ifndef GAINTERNAL_H
+#define GAINTERNAL_H
 
 #include "database/database.h"
 
@@ -96,4 +96,4 @@ typedef struct nnl
 /* procedure declarations */
 extern bool gaMazeInit();
 
-#endif /* _GAINTERNAL_H */
+#endif /* GAINTERNAL_H */

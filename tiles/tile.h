@@ -20,15 +20,11 @@
  * rcsid "$Header: /usr/cvsroot/magic-8.0/tiles/tile.h,v 1.3 2010/06/24 12:37:57 tim Exp $"
  */
 
-#ifndef _TILES_H
-#define	_TILES_H
+#ifndef TILES_H
+#define	TILES_H
 
-#ifndef _MAGIC_H
 #include "utils/magic.h"
-#endif
-#ifndef _GEOMETRY_H
 #include "utils/geometry.h"
-#endif
 
 /*
  * A tile is the basic unit used for representing both space and
@@ -320,4 +316,4 @@ extern Rect TiPlaneRect;	/* Rectangle large enough to force area
 				 * that should ever be painted in a plane.
 				 */
 
-#endif /* _TILES_H */
+#endif /* TILES_H */

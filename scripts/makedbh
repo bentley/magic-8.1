@@ -186,4 +186,4 @@ foreach i (${count})
 end
 
 echo "" >> $2
-echo "#endif /* _DATABASE_H */" >> $2
+echo "#endif /* DATABASE_H */" >> $2

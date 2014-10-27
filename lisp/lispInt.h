@@ -20,8 +20,8 @@
  *  $Id: lispInt.h,v 1.1.1.1 2008/02/03 20:43:50 tim Exp $
  *
  *************************************************************************/
-#ifndef __LISPINT_H__
-#define __LISPINT_H__
+#ifndef LISPINT_H
+#define LISPINT_H
 
 #include <stdio.h>
 
@@ -147,4 +147,4 @@ extern void LispStackClear ();
 
 extern int lispInFile;		/* flag used for :setpoint */
 
-#endif /* __LISPINT_H__ */
+#endif /* LISPINT_H */

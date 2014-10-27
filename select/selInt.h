@@ -20,8 +20,8 @@
  * rcsid="$Header: /usr/cvsroot/magic-8.0/select/selInt.h,v 1.1.1.1 2008/02/03 20:43:50 tim Exp $"
  */
 
-#ifndef _SELINT_H
-#define _SELINT_H
+#ifndef SELINT_H
+#define SELINT_H
 
 #include "utils/magic.h"
 #include "database/database.h"
@@ -41,4 +41,4 @@ extern CellDef *Select2Def;
 
 extern CellUse *selectLastUse;
 
-#endif /* _SELINT_H */
+#endif /* SELINT_H */

@@ -23,11 +23,11 @@
  *	but global to all source files within the router module.
  */
 
-#ifndef _ROUTERINT_H
-#define _ROUTERINT_H
+#ifndef ROUTERINT_H
+#define ROUTERINT_H
 
 extern int	rtrTarget;			/* Via minimization, target type	*/
 extern int	rtrReplace;			/* Via minimization, replacement type	*/
 extern int	rtrDelta;			/* Change in layer width		*/
 
-#endif /* _ROUTERINT_H */
+#endif /* ROUTERINT_H */

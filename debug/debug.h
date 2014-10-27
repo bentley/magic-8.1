@@ -21,8 +21,8 @@
  * rcsid $Header: /usr/cvsroot/magic-8.0/debug/debug.h,v 1.1.1.1 2008/02/03 20:43:50 tim Exp $
  */
 
-#ifndef _DEBUG_H
-#define _DEBUG_H
+#ifndef DEBUG_H
+#define DEBUG_H
 
 #include "utils/magic.h"
 
@@ -75,4 +75,4 @@ extern ClientData DebugAddClient();
 extern int DebugAddFlag();
 extern void DebugShow(), DebugSet();
 
-#endif /* _DEBUG_H */
+#endif /* DEBUG_H */

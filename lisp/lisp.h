@@ -22,8 +22,8 @@
  *  $Id: lisp.h,v 1.1.1.1 2008/02/03 20:43:50 tim Exp $
  *
  *************************************************************************/
-#ifndef __LISP_H__
-#define __LISP_H__
+#ifndef LISP_H
+#define LISP_H
 
 /*
   Interface to the Lisp interpreter from the textio module
@@ -34,5 +34,5 @@ extern void LispInit();
 extern void LispSetTech();
 extern void LispSetEdit();
 
-#endif /* __LISP_H__ */
+#endif /* LISP_H */
 

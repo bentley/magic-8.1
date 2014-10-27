@@ -62,8 +62,8 @@ static char rcsid[] __attribute__ ((unused)) = "$Header: /usr/cvsroot/magic-8.0/
 #include "utils/malloc.h"
 #include "utils/signals.h"
 
-#ifndef _PATH_TMP
-#define _PATH_TMP "/tmp"
+#ifndef PATH_TMP
+#define PATH_TMP "/tmp"
 #endif
 
 extern char *Path;
@@ -700,7 +700,7 @@ DBFileRecovery(filename)
     {
 
 	tempdir = getenv("TMPDIR");
-	if (tempdir == NULL) tempdir = _PATH_TMP;
+	if (tempdir == NULL) tempdir = PATH_TMP;
 
 	cwd = opendir(tempdir);
 	if (cwd == NULL) return;
@@ -2940,7 +2940,7 @@ DBWriteBackup(filename)
 	    char *doslash, *template;
 
 	    tempdir = getenv("TMPDIR");
-	    if (tempdir == NULL) tempdir = _PATH_TMP;
+	    if (tempdir == NULL) tempdir = PATH_TMP;
 	    template = (char *)mallocMagic(20 + strlen(tempdir));
 	    pid = (int)getpid();
 

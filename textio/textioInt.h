@@ -19,8 +19,8 @@
  * rcsid $Header: /usr/cvsroot/magic-8.0/textio/textioInt.h,v 1.1.1.1 2008/02/03 20:43:50 tim Exp $
  */
 
-#ifndef _TEXTIOINT_H
-#define _TEXTIOINT_H
+#ifndef TEXTIOINT_H
+#define TEXTIOINT_H
 
 #include "textio/textio.h"
 #include "textio/txcommands.h"
@@ -54,4 +54,4 @@ extern bool TxGetInputEvent();
 
 extern void txFprintfBasic(FILE *, ...);
 
-#endif /* _TEXTIOINT_H */
+#endif /* TEXTIOINT_H */

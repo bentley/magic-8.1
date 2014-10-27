@@ -20,8 +20,8 @@
  * rcsid="$Header: /usr/cvsroot/magic-8.0/utils/main.h,v 1.2 2009/09/10 20:32:55 tim Exp $"
  */
 
-#ifndef _MAIN_H
-#define _MAIN_H
+#ifndef MAIN_H
+#define MAIN_H
 
 #include "windows/windows.h"
 #include "database/database.h"
@@ -95,4 +95,4 @@ extern void MainExit(int);	/* a way of exiting that cleans up after itself */
 // These are not declared anywhere
 // extern bool MainLoadStyles(), MainLoadCursors();  /* Used during init & reset */
 
-#endif /* _MAIN_H */
+#endif /* MAIN_H */

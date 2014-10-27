@@ -22,16 +22,14 @@
  * rcsid "$Header: /usr/cvsroot/magic-8.0/database/database.h.in,v 1.8 2010/08/25 17:33:55 tim Exp $"
  */
 
-#ifndef _DATABASE_H
-#define	_DATABASE_H
+#ifndef DATABASE_H
+#define	DATABASE_H
 
-#ifndef	_TILES_H
 #include "tiles/tile.h"
-#endif	/* _TILES_H */
 
-#ifndef	_HASH_H
+#ifndef	HASH_H
 #include "utils/hash.h"
-#endif	/* _HASH_H */
+#endif	/* HASH_H */
 
 /* ----------------------- Tunable constants -------------------------- */
 

@@ -10,12 +10,10 @@
  * rcsid "$$"
  */
 
-#ifndef _FONTS_H
-#define	_FONTS_H
+#ifndef FONTS_H
+#define	FONTS_H
 
-#ifndef	_TILES_H
 #include "tiles/tile.h"
-#endif	/* _TILES_H */
 
 /* ---------------------------- Fonts --------------------------------- */
 
@@ -39,4 +37,4 @@ typedef struct
 extern MagicFont **DBFontList;	/* List of loaded font vectors	*/
 extern int DBNumFonts;		/* Number of loaded fonts	*/
 
-#endif /* _FONTS_H */
+#endif /* FONTS_H */

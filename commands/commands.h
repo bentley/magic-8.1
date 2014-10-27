@@ -20,8 +20,8 @@
  * rcsid $Header: /usr/cvsroot/magic-8.0/commands/commands.h,v 1.3 2009/01/19 15:43:03 tim Exp $
  */
 
-#ifndef _COMMANDS_H
-#define	_COMMANDS_H
+#ifndef COMMANDS_H
+#define	COMMANDS_H
 
 #include "windows/windows.h"
 #include "database/database.h"
@@ -64,4 +64,4 @@ extern void CmdDoMacro();
 extern TileType CmdFindNetProc();
 extern bool CmdCheckForPaintFunc();
 
-#endif /* _COMMANDS_H */
+#endif /* COMMANDS_H */

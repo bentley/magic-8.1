@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef	_DQUEUE_H
-#define	_DQUEUE_H
+#ifndef	DQUEUE_H
+#define	DQUEUE_H
 
 #include "utils/magic.h"
 
@@ -52,4 +52,4 @@ extern void DQPushRear();
 extern ClientData DQPopFront();
 extern ClientData DQPopRear();
 
-#endif	/* _DQUEUE_H */
+#endif	/* DQUEUE_H */

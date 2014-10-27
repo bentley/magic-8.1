@@ -1,5 +1,5 @@
-#ifndef _SIM_H
-#define _SIM_H
+#ifndef SIM_H
+#define SIM_H
 
 #include "utils/magic.h"
 
@@ -28,4 +28,4 @@ extern HashTable SimGNAliasTbl;
 extern HashTable SimGetnodeTbl;
 extern HashTable SimAbortSeenTbl;
 
-#endif /* _SIM_H */
+#endif /* SIM_H */

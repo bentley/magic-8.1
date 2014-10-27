@@ -6,8 +6,8 @@
  *	the definition for "ClientData" is in conflict.
  */
 
-#ifndef _TCLMAGIC_H
-#define _TCLMAGIC_H
+#ifndef TCLMAGIC_H
+#define TCLMAGIC_H
 
 #ifdef MAGIC_WRAPPER
 
@@ -31,4 +31,4 @@ extern int TagVerify();
 #endif
 
 #endif	/* MAGIC_WRAPPER */
-#endif /* _TCLMAGIC_H */
+#endif /* TCLMAGIC_H */

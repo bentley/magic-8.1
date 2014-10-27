@@ -19,8 +19,8 @@
  * rcsid[]="$Header: /usr/cvsroot/magic-8.0/utils/signals.h,v 1.1.1.1 2008/02/03 20:43:50 tim Exp $";
  */
 
-#ifndef _MAGSIGNAL_H
-#define _MAGSIGNAL_H
+#ifndef MAGSIGNAL_H
+#define MAGSIGNAL_H
 
 #include "utils/magic.h"
 
@@ -56,4 +56,4 @@ extern void SigTimerDisplay();
 
 extern sigRetVal sigOnInterrupt();
 
-#endif /* _MAGSIGNAL_H */
+#endif /* MAGSIGNAL_H */

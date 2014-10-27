@@ -20,8 +20,8 @@
  * rcsid $Header: /usr/cvsroot/magic-8.0/plow/plowInt.h,v 1.1.1.1 2008/02/03 20:43:50 tim Exp $
  */
 
-#ifndef _PLOWINT_H
-#define	_PLOWINT_H
+#ifndef PLOWINT_H
+#define	PLOWINT_H
 
 #include "tiles/tile.h"
 
@@ -255,4 +255,4 @@ extern Tile *plowSplitY();
  */
 #include "plowDebugInt.h"
 
-#endif	/* _PLOWINT_H */
+#endif	/* PLOWINT_H */

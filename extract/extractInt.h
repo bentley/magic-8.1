@@ -23,8 +23,8 @@
  *
  */
 
-#ifndef _EXTRACTINT_H
-#define _EXTRACTINT_H
+#ifndef EXTRACTINT_H
+#define EXTRACTINT_H
 
 #include "database/database.h"
 
@@ -1018,4 +1018,4 @@ extern struct stack *extNodeStack;
 
 #include "extDebugInt.h"
 
-#endif /* _EXTRACTINT_H */
+#endif /* EXTRACTINT_H */

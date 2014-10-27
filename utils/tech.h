@@ -18,8 +18,8 @@
  * rcsid "$Header: /usr/cvsroot/magic-8.0/utils/tech.h,v 1.1.1.1 2008/02/03 20:43:50 tim Exp $"
  */
 
-#ifndef _TECH_H
-#define _TECH_H
+#ifndef TECH_H
+#define TECH_H
 
 #include "utils/magic.h"
 
@@ -56,4 +56,4 @@ extern void TechError(char *, ...);
 extern void TechAddClient();
 extern void TechAddAlias();
 
-#endif /* _TECH_H */
+#endif /* TECH_H */

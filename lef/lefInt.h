@@ -7,8 +7,8 @@
  * rcsid $Header: /usr/cvsroot/magic-8.0/lef/lefInt.h,v 1.1.1.1 2008/02/03 20:43:50 tim Exp $
  */
 
-#ifndef _LEFINT_H
-#define _LEFINT_H
+#ifndef LEFINT_H
+#define LEFINT_H
 
 #include "utils/magic.h"
 
@@ -139,4 +139,4 @@ LefMapping *defMakeInverseLayerMap();
 void LefError(char *, ...);	/* Variable argument procedure requires */
 				/* parameter list.			*/
 
-#endif /* _LEFINT_H */
+#endif /* LEFINT_H */

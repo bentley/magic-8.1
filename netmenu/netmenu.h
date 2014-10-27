@@ -21,8 +21,8 @@
  * rcsid = "$Header: /usr/cvsroot/magic-8.0/netmenu/netmenu.h,v 1.1.1.1 2008/02/03 20:43:50 tim Exp $";
  */
 
-#ifndef _NETMENU_H
-#define _NETMENU_H
+#ifndef NETMENU_H
+#define NETMENU_H
 
 #include "utils/magic.h"
 
@@ -56,4 +56,4 @@ extern void NMButtonRight();
 extern void NMMeasureAll();
 #endif
 
-#endif /* _NETMENU_H */
+#endif /* NETMENU_H */

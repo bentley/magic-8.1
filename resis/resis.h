@@ -6,8 +6,8 @@
    refer to both before and after processing.
 */
 
-#ifndef _RESIS_H
-#define _RESIS_H
+#ifndef RESIS_H
+#define RESIS_H
 
 #define LAYERS_PER_CONTACT 3
 #define TILES_PER_JUNCTION 2
@@ -680,4 +680,4 @@ extern void			ResSortBreaks();
 	pX_->portList = rp; \
 }
 
-#endif /* _RESIS_H */
+#endif /* RESIS_H */

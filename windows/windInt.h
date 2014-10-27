@@ -19,8 +19,8 @@
  *
  */
 
-#ifndef _WINDINT_H
-#define _WINDINT_H
+#ifndef WINDINT_H
+#define WINDINT_H
 
 #include "windows/windows.h"
 #include "graphics/glyphs.h"
@@ -83,4 +83,4 @@ extern int windCaptionPixels;
 #define CREATE_HEIGHT	300
 #define CREATE_WIDTH	300
 
-#endif /* _WINDINT_H */
+#endif /* WINDINT_H */

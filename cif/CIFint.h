@@ -19,8 +19,8 @@
  * rcsid "$Header: /usr/cvsroot/magic-8.0/cif/CIFint.h,v 1.3 2008/12/04 17:10:29 tim Exp $"
  */
 
-#ifndef _CIFINT_H
-#define _CIFINT_H
+#ifndef CIFINT_H
+#define CIFINT_H
 
 #include "database/database.h"
 
@@ -333,4 +333,4 @@ extern void CIFError();
 #define CIF_SOLIDTYPE 1
 extern TileTypeBitMask CIFSolidBits;
 
-#endif /* _CIFINT_H */
+#endif /* CIFINT_H */

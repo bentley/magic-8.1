@@ -19,8 +19,8 @@
  * rcsid $Header: /usr/cvsroot/magic-8.0/calma/calma.h,v 1.1.1.1 2008/02/03 20:43:50 tim Exp $
  */
 
-#ifndef _CALMA_H
-#define _CALMA_H
+#ifndef CALMA_H
+#define CALMA_H
 
 #include "utils/magic.h"
 
@@ -42,4 +42,4 @@ extern void CalmaReadFile();
 extern void CalmaTechInit();
 extern bool CalmaGenerateArray();
 
-#endif /* _CALMA_H */
+#endif /* CALMA_H */

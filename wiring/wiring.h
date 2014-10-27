@@ -19,8 +19,8 @@
  * rcsid $Header: /usr/cvsroot/magic-8.0/wiring/wiring.h,v 1.2 2008/09/05 13:56:25 tim Exp $
  */
 
-#ifndef _WIRING_H
-#define _WIRING_H
+#ifndef WIRING_H
+#define WIRING_H
 
 #include "utils/magic.h"
 #include "database/database.h"
@@ -91,4 +91,4 @@ extern void WireTechScale();
 
 extern void WireInit();
 
-#endif /* _WIRING_H */
+#endif /* WIRING_H */

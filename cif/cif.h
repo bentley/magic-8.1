@@ -20,8 +20,8 @@
  * rcsid "$Header: /usr/cvsroot/magic-8.0/cif/cif.h,v 1.4 2010/06/24 12:37:15 tim Exp $
  */
 
-#ifndef _CIF_H
-#define _CIF_H
+#ifndef CIF_H
+#define CIF_H
 
 #include "database/database.h"
 
@@ -84,4 +84,4 @@ extern int CIFOutputScaleFactor();
 extern void PaintWireList();
 extern void PaintPolygon();
 
-#endif /* _CIF_H */
+#endif /* CIF_H */

@@ -19,8 +19,8 @@
  * RCSID $Header: /usr/cvsroot/magic-8.0/utils/netlist.h,v 1.1.1.1 2008/02/03 20:43:50 tim Exp $
  */
 
-#ifndef _RMNETLIST_H
-#define _RMNETLIST_H
+#ifndef RMNETLIST_H
+#define RMNETLIST_H
 
 #include "utils/geometry.h"
 #include "utils/magic.h"
@@ -123,4 +123,4 @@ typedef struct
 /* Exports */
 extern char *NLNetName();
 
-#endif /* _RMNETLIST_H */
+#endif /* RMNETLIST_H */
